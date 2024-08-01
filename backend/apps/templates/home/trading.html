@@ -1,0 +1,133 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+  .dropdown-menu {
+    min-width: unset !important; /* Adjust width of dropdown menu as needed */
+  }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+  <div class="card">
+    <div class="card-header pb-0">
+      <div class="row">
+        <div class="col-lg-6 col-7">
+          <h6>Top Coins</h6>
+        </div>
+        <div class="col-lg-6 col-5 my-auto text-end">
+          <div class="dropdown float-lg-end pe-4">
+            <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-ellipsis-v text-secondary"></i>
+            </a>
+            <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+              <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+              <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+              <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body px-0 pb-2">
+      <div class="table-responsive">
+        <table class="table align-items-center mb-0 table-width-auto">
+          <thead>
+            <tr>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Coin</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Score</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if coin_names %}
+              {% for index in range(coin_names|length) %}
+                <tr>
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ coin_names[index].coin }}</td>
+                  <td>{{ coin_names[index].virality_score }}</td>
+                  <td class="text-center">
+                    <a href="/home/trading/{{ coin_names[index].coin }}" class="btn btn-sm btn-primary me-1">Show Trade Chart</a>
+                    <a href="/home/trading/remove/{{ coin_names[index].id }}" class="btn btn-sm btn-danger">Delete</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="12" class="text-center">No data available</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Container -->
+  <div class="card mt-4">
+    <div class="card-header pb-0">
+      <div class="row">
+        <div class="col-lg-6 col-7">
+          <h6>Virality Scores</h6>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="viralityChart"></canvas>
+    </div>
+  </div>
+</div>
+
+{% include "includes/footer.html" %}
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+<script src="{{ config.ASSETS_ROOT }}/js/plugins/chartjs.min.js"></script>
+<script>
+  // Prepare the data
+  var coinNames = {{ coin_names|map(attribute='coin')|list|tojson }};
+  var viralityScores = {{ coin_names|map(attribute='virality_score')|list|tojson }};
+  
+  // Create the chart
+  var ctx = document.getElementById('viralityChart').getContext('2d');
+  var viralityChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: coinNames,
+          datasets: [{
+              label: 'Virality Score',
+              data: viralityScores,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+</script>
+{% endblock javascripts %}
