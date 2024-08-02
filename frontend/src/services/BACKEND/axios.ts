@@ -1,17 +1,12 @@
+import axios from "axios";
 
-import axios from 'axios';
-
-
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const axiosInstance = axios.create({
-  baseURL: "http://buzz-back-2:8080", 
-  timeout: 10000, 
+  baseURL: apiUrl,
+  timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
-
+    "Content-Type": "application/json",
   },
 });
-
-
 
 export default axiosInstance;

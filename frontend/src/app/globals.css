@@ -1,12 +1,11 @@
-
-@import '../styles/css/dark-theme-core.css';
-@import '../styles/css/nucleo-icons.css';
-@import '../styles/css/nucleo-svg.css';
-@import '../styles/css/soft-ui-dashboard.css';
+@import "../styles/css/dark-theme-core.css";
+@import "../styles/css/nucleo-icons.css";
+@import "../styles/css/nucleo-svg.css";
+@import "../styles/css/soft-ui-dashboard.css";
 
 .chart-cont {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding: 40px;
 }

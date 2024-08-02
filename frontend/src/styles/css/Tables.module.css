@@ -1,0 +1,24 @@
+.table {
+  margin-top: 80px !important;
+  margin-bottom: 80px !important;
+  background-color: #e2d9d1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 0 auto; /* Center the table horizontally */
+}
+
+.header {
+  background-color: #bebab5;
+  font-weight: bold;
+  text-align: left;
+  padding: 12px;
+}
+
+.cell {
+  padding: 12px;
+  border-bottom: 2px solid #ddd;
+  text-align: left; /* Optional: Add text-align for cell */
+}
