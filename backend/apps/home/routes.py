@@ -81,7 +81,7 @@ def analysis():
     
     
     coin_data = CoinData.query.all()
-    print(coin_data[0].to_dict())
+    # print(coin_data[0].to_dict())
     
     return jsonify({'coin_data':[i.to_dict() for i in coin_data]})
 
@@ -142,6 +142,16 @@ def update1():
 def update2():
     try:
         update_data()
+    except Exception as e:
+        return jsonify({'message':'Failed to update coins'}), 400
+    return jsonify({'message':'Successful'}), 200
+
+@blueprint.route('/home/newcoins', methods=['GET'])
+@jwt_required()
+def update3():
+    try:
+        data = get_new_listings()
+        # print(data)
     except Exception as e:
         return jsonify({'message':'Failed to update coins'}), 400
     return jsonify({'message':'Successful'}), 200

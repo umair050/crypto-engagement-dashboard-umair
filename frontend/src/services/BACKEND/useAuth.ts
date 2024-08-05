@@ -7,7 +7,7 @@ export const login = async ({ username, password }: { username: string, password
 
     let response;
     try {
-        response = await axios.post("http://buzz-back-2:8080" + "/login", { username, password })
+        response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}` + "/login", { username, password })
 
 
         if (response.status === 200) {
@@ -31,7 +31,7 @@ export const login = async ({ username, password }: { username: string, password
 export const register = async ({ username, password }: { username: string, password: string }) => {
     let response;
     try {
-        response = await axios.post("http://buzz-back-2:8080" + "/register", { username, password })
+        response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}` + "/register", { username, password })
 
 
 
