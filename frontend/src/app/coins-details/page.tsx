@@ -47,10 +47,13 @@ const Page = () => {
           </div>
           <div className="chart-cont">
             {/* <Charts data={dummyData} /> */}
+            <div>Title</div>
             <LineChart dates={dummyData1['Price_Performance'].dates} prices={dummyData1['Price_Performance'].prices} />
             <br></br>
+            <div>Title</div>
             <LineChart dates={dummyData1['Trading_vol'].dates} prices={dummyData1['Trading_vol'].prices} />
             <br></br>
+            <div>Title</div>
             <LineChart dates={dummyData1['Adoption_Rate'].dates} prices={dummyData1['Adoption_Rate'].prices} />
             {/* <Charts data={dummyData1} /> */}
           </div>
