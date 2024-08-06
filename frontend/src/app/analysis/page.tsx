@@ -5,21 +5,18 @@ import axios from "axios";
 import { BarChart, LineChart } from "@/components/charts/Chart";
 import { cookies } from "next/headers";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
 export default async function Home() {
-  const access = cookies().get("access");
+  const access = cookies().get("access")
 
   if (!access) {
-    return <></>;
+    return <></>
   }
   let res_table;
   try {
-    res_table = await axios.get(`${apiUrl}/home/analysis`, {
-      headers: { Authorization: `Bearer ${access.value}` },
-    });
+    res_table = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/home/analysis`, { headers: { "Authorization": `Bearer ${access.value}` } });
+
   } catch (e: any) {
-    console.log(e);
+    console.log(e)
   }
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -27,17 +24,20 @@ export default async function Home() {
       <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
         <TopNav active={0} />
         <div className="chart-cont">
-          {res_table &&
-            res_table.data.coin_data.map((item: any, idx: number) => (
-              <>
-                <div key={idx}>
-                  <div style={{}}>{item.coin}</div>
-                  <BarChart coinData={item} />
+          {res_table && res_table.data.coin_data.map((item: any, idx: number) => (
+            <>
+
+              <div key={idx}>
+                <div style={{}}>
+                  {item.coin}
                 </div>
-              </>
-            ))}
+                <BarChart coinData={item} />
+              </div>
+            </>
+          ))}
         </div>
       </main>
+
     </main>
   );
 }
