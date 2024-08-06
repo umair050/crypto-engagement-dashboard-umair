@@ -3,6 +3,7 @@ import TopNav from "@/components/Navigation/TopNav";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Charts from "@/components/pages/charts";
 import Tables from "@/components/tables/Tables";
+import { LineChart } from "@/components/charts/Chart";
 
 const dummyData = {
   Monthly: {
@@ -45,9 +46,16 @@ const Page = () => {
             <Tables />
           </div>
           <div className="chart-cont">
-            <Charts data={dummyData} />
+            {/* <Charts data={dummyData} /> */}
+            <div>Title</div>
+            <LineChart dates={dummyData1['Price_Performance'].dates} prices={dummyData1['Price_Performance'].prices} />
             <br></br>
-            <Charts data={dummyData1} />
+            <div>Title</div>
+            <LineChart dates={dummyData1['Trading_vol'].dates} prices={dummyData1['Trading_vol'].prices} />
+            <br></br>
+            <div>Title</div>
+            <LineChart dates={dummyData1['Adoption_Rate'].dates} prices={dummyData1['Adoption_Rate'].prices} />
+            {/* <Charts data={dummyData1} /> */}
           </div>
         </main>
       </main>
