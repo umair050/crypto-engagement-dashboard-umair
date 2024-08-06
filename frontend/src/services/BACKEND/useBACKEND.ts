@@ -6,6 +6,7 @@ import { cookies } from 'next/headers'
 
 export const fetchHome = async () => {
     const access = cookies().get("access")
+    console.log('This is access token',access)
     if (!access) {
         return null
     }

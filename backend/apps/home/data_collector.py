@@ -33,7 +33,7 @@ bomx = botometer.BotometerX(rapidapi_key=rapidapi_key)
 bot_threshold = 0.4
 
 def create_search_url(keyword):
-    query = f"query={keyword}&tweet.fields=lang,entities&max_results=50"
+    query = f"query={keyword}&tweet.fields=lang,entities&max_results=10"
     url = f"https://api.twitter.com/2/tweets/search/recent?{query}"
     return url
 
@@ -42,7 +42,13 @@ def connect_to_endpoint(url, params=None):
         "Authorization": f"Bearer {bearer_token}",
         "User-Agent": "v2TweetLookupPython"
     }
+
+    print(headers)
+    print(url)
+    print('line 48',params)
     response = requests.get(url, headers=headers, params=params)
+
+    print('line 51',response)
 
     if response.status_code != 200:
         raise Exception(
@@ -73,8 +79,11 @@ def discover_new_coins(keywords=["crypto"]):
     for keyword in keywords:
         print(f"Searching for keyword: {keyword}")
         url = create_search_url(keyword)
+        print('line 82' , url)
         json_response = connect_to_endpoint(url)
-
+        print()
+        print('json response',json_response)
+        print()
         for tweet in json_response.get("data", []):
             if 'entities' in tweet and 'hashtags' in tweet['entities']:
                 for hashtag in tweet['entities']['hashtags']:
@@ -409,6 +418,35 @@ def update_data():
                 )
                 db.session.add(coin_data_obj)
             db.session.commit()
+
+
+def get_new_listings():
+    url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/new"
+ 
+
+    parameters = {
+        "convert": "USD"  # Currency to convert to
+    }
+
+    headers = {
+        "Accepts": "application/json",
+        "X-CMC_PRO_API_KEY": coinmarket_key,
+    }
+
+    response = requests.get(url, headers=headers, params=parameters)
+
+    print('response',response)
+    # Parse the JSON response
+    data = json.loads(response.text)
+
+    symbols = []
+    for coin in data["data"]:
+        coin = data["data"][coin]
+        symbol = coin["symbol"]
+        symbols.append(symbol)
+    
+    return symbols
+
 
 
 if __name__ == "__main__":
