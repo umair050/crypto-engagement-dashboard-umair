@@ -7,9 +7,11 @@ import { useFetchCharts
  } from '@/hooks/useFetchChart'
 import React from 'react'
 
+import Link from 'next/link';
+
 const data = () => {
     const {data, loading, error} = useFetchCharts()
-    console.log('line 12',data)
+    console.log('data',data)
   return (
     <>
     {loading && <Loader/>}
@@ -17,11 +19,18 @@ const data = () => {
     {!loading && !error && data && <>
         {Object.keys(data).length > 0 && Object.keys(data).map((item: any, idx) => {
             if (data[item] === null || data[item] === undefined || data[item].prices === null || data[item].prices === null) return null;
+         
+
             return (
-              <div key={idx}>
+
+              // link to the specific chart with the url data[item]
+
+              <Link href={`/coins-details/${item}`} key={idx}>
                 <div style={{ }}>{item}</div>
                 <LineChart dates={data[item].dates} prices={data[item].prices} />
-              </div>
+              </Link>
+
+
             );
           })}
     </>}
