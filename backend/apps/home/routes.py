@@ -6,6 +6,10 @@ from .data_collector import *
 from flask_jwt_extended import JWTManager as JWT, jwt_required, get_jwt_identity, create_access_token
 from .models import User
 from apps import db, bcrypt
+try:
+    from .analytics import fetch_alphas,create_dummy_data
+except ImportError as e:
+    print(f"Error importing: {e}")
 
 @blueprint.route('/index', methods=['GET'])
 @jwt_required()
@@ -155,3 +159,26 @@ def update3():
     except Exception as e:
         return jsonify({'message':'Failed to update coins'}), 400
     return jsonify({'message':'Successful'}), 200
+
+
+
+# API route to return engagement coefficients
+@blueprint.route('/home/trading/engagement_coefficient/<coin_symbol>', methods=['GET', 'POST'])
+def engagement_coefficient(coin_symbol):
+    # Fetch the alphas (engagement coefficients)
+
+    # create_dummy_data()
+    alphas = fetch_alphas()
+   
+    # Get the coefficient for the requested coin symbol
+    if coin_symbol in alphas.index:
+        result = {coin_symbol: alphas[coin_symbol]}
+    else:
+        result = {"error": "Coin symbol not found"}
+
+    print('result',result)
+    
+    # Return the result as JSON
+    return jsonify(result)
+
+   

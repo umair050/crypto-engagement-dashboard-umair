@@ -9,6 +9,7 @@ import React from 'react'
 
 const data = () => {
     const {data, loading, error} = useFetchCharts()
+    console.log('line 12',data)
   return (
     <>
     {loading && <Loader/>}

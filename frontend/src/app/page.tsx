@@ -16,6 +16,7 @@ export default async function Home() {
   let res_table;
   try {
     res_table = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/home/analysis`, { headers: { "Authorization": `Bearer ${access.value}` } });
+    console.log('res_table',res_table)
 
   } catch (e: any) {
     console.log(e)
