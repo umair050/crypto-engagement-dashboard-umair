@@ -45,7 +45,6 @@ def connect_to_endpoint(url, params=None):
 
     print(headers)
     print(url)
-    print('line 48',params)
     response = requests.get(url, headers=headers, params=params)
 
     print('line 51',response)
@@ -79,12 +78,8 @@ def discover_new_coins(keywords=["crypto"]):
     for keyword in keywords:
         print(f"Searching for keyword: {keyword}")
         url = create_search_url(keyword)
-        print('line 82' , url)
         json_response = connect_to_endpoint(url)
-        print()
-        print('json response',json_response)
-        print()
-        for tweet in json_response.get("data", []):
+         for tweet in json_response.get("data", []):
             if 'entities' in tweet and 'hashtags' in tweet['entities']:
                 for hashtag in tweet['entities']['hashtags']:
                     coin = hashtag['tag'].lower()
@@ -220,7 +215,7 @@ def get_twitter_mentions(keyword):
     params = {
         'query': query,
         'tweet.fields': 'lang',
-        'max_results': 50,
+        'max_results': 10,
     }
     json_response = connect_to_endpoint(url, params)
     count = len(json_response.get('data', []))
@@ -246,6 +241,7 @@ def collect_coin_data(coins):
         print("No coins found this time")
         return []
     prices = get_coin_prices(coins)
+
     for coin in coins:
         print("Processing coin:", coin)
         try:
@@ -263,14 +259,12 @@ def collect_coin_data(coins):
                         'tweet.fields': 'id,text,author_id',
                         'max_results': MAX_TWITTER_RESULTS,
                     }
-                    
                     json_response = connect_to_endpoint(url, params)
                     
                     response = json_response.get('data', [])
                     tweet_authors = list(set([int(tweet['author_id']) for tweet in response]))
                     
                     bot_levels = bomx.get_botscores_in_batch(user_ids=tweet_authors)
-
                     bot_scores = {sit['user_id']:sit['bot_score'] for sit in bot_levels if sit.get('bot_score') is not None}
                     
                     engagement_scores = []
@@ -333,9 +327,7 @@ def collect_coin_data(coins):
                             "Content-Type": "application/json",
                             "Authorization": "Bearer " + openai_like_api_key
                         }
-
                         response = requests.post(openai_like_api_url, headers=headers, json=parameters)
-
                         data2 = json.loads(response.text)
                         print(data2)
                         llm_result = find_first_float(data2['choices'][0]['message']['content'])
@@ -393,7 +385,7 @@ def update_data():
     coins_query = Coins.query.with_entities(Coins.coin).all()
 
     # Extract the coin names from the query result
-    new_coins = [coin[0] for coin in coins_query]
+    new_coins = [coin[0] for coin in coins_query]    
     # To make sure we save stuff before they end
     for specific_coin in new_coins:
         coin_data_list = collect_coin_data([specific_coin])
@@ -420,22 +412,21 @@ def update_data():
             db.session.commit()
 
 
+def get_coin_data(specific_coin):
+    coin_data = db.session.query(CoinData).filter_by(coin=specific_coin).first()
+    return coin_data
+
 def get_new_listings():
     url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/new"
- 
-
     parameters = {
         "convert": "USD"  # Currency to convert to
     }
-
     headers = {
         "Accepts": "application/json",
         "X-CMC_PRO_API_KEY": coinmarket_key,
     }
 
     response = requests.get(url, headers=headers, params=parameters)
-
-    print('response',response)
     # Parse the JSON response
     data = json.loads(response.text)
 

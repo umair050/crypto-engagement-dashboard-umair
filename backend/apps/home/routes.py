@@ -168,17 +168,37 @@ def engagement_coefficient(coin_symbol):
     # Fetch the alphas (engagement coefficients)
 
     # create_dummy_data()
-    alphas = fetch_alphas()
+
+    # return 'Hello @@'
+
+    # alphas = fetch_alphas()
    
-    # Get the coefficient for the requested coin symbol
-    if coin_symbol in alphas.index:
-        result = {coin_symbol: alphas[coin_symbol]}
-    else:
-        result = {"error": "Coin symbol not found"}
+    # # Get the coefficient for the requested coin symbol
+    # if coin_symbol in alphas.index:
+    #     result = {coin_symbol: alphas[coin_symbol]}
+    # else:
+    #     result = {"error": "Coin symbol not found"}
 
-    print('result',result)
+    # print('result',result)
     
-    # Return the result as JSON
-    return jsonify(result)
+    # # Return the result as JSON
+    # return jsonify(result)
 
+@blueprint.route('/coin-details/<coin_symbol>', methods=['GET', 'POST'])
+def get_coin_details(coin_symbol):
+    coin_data = get_coin_data(coin_symbol)
+    if coin_data:
+        return jsonify({
+                'coin': coin_data.coin,
+                'mentions': coin_data.mentions,
+                'market_cap': coin_data.market_cap,
+                'sentiment_score': coin_data.sentiment_score,
+                'virality_score': coin_data.virality_score,
+                'hype_to_market_cap': coin_data.hype_to_market_cap,
+                'one_month_prediction': coin_data.one_month_prediction,
+                'one_year_prediction': coin_data.one_year_prediction,
+                'bot_ratio': coin_data.bot_ratio
+        }), 200
+    else:
+        return jsonify({'error': 'No data found for the specified coin.'}), 404
    
