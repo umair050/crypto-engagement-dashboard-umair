@@ -1,10 +1,13 @@
 import React from "react";
 import TopNav from "@/components/Navigation/TopNav";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import Charts from "@/components/pages/charts";
 import Tables from "@/components/tables/Tables";
 import { LineChart } from "@/components/charts/Chart";
 
+const Status = {
+  fraudulent: false, // true or false
+  valid: true, // true or false
+};
 const dummyData = {
   Monthly: {
     dates: ["2023-01-01", "2023-01-02", "2023-01-03"],
@@ -45,16 +48,58 @@ const Page = () => {
           <div>
             <Tables />
           </div>
-          <div className="chart-cont">
+          <div className="status-bar">
+            <div> Status:</div>
+
+            <div
+              className={`circle ${
+                Status.fraudulent ? "red" : Status.valid ? "green" : ""
+              }`}
+            ></div>
+          </div>
+          <div>
             {/* <Charts data={dummyData} /> */}
-            <div>Title</div>
-            <LineChart dates={dummyData1['Price_Performance'].dates} prices={dummyData1['Price_Performance'].prices} />
-            <br></br>
-            <div>Title</div>
-            <LineChart dates={dummyData1['Trading_vol'].dates} prices={dummyData1['Trading_vol'].prices} />
-            <br></br>
-            <div>Title</div>
-            <LineChart dates={dummyData1['Adoption_Rate'].dates} prices={dummyData1['Adoption_Rate'].prices} />
+
+            <div className="chart-cont">
+              <div>
+                <div>Title</div>
+                <LineChart
+                  dates={dummyData1["Price_Performance"].dates}
+                  prices={dummyData1["Price_Performance"].prices}
+                />
+              </div>
+              <div>
+                <div>Title</div>
+                <LineChart
+                  dates={dummyData1["Trading_vol"].dates}
+                  prices={dummyData1["Trading_vol"].prices}
+                />
+              </div>
+            </div>
+            <div className="chart-cont-3">
+              <div>
+                <div>Title</div>
+                <LineChart
+                  dates={dummyData1["Adoption_Rate"].dates}
+                  prices={dummyData1["Adoption_Rate"].prices}
+                />
+              </div>
+              <div>
+                <div>Title</div>
+                <LineChart
+                  dates={dummyData1["Adoption_Rate"].dates}
+                  prices={dummyData1["Adoption_Rate"].prices}
+                />
+              </div>
+              <div>
+                <div>Title</div>
+                <LineChart
+                  dates={dummyData1["Adoption_Rate"].dates}
+                  prices={dummyData1["Adoption_Rate"].prices}
+                />
+              </div>
+            </div>
+
             {/* <Charts data={dummyData1} /> */}
           </div>
         </main>
