@@ -79,7 +79,7 @@ def discover_new_coins(keywords=["crypto"]):
         print(f"Searching for keyword: {keyword}")
         url = create_search_url(keyword)
         json_response = connect_to_endpoint(url)
-         for tweet in json_response.get("data", []):
+        for tweet in json_response.get("data", []):
             if 'entities' in tweet and 'hashtags' in tweet['entities']:
                 for hashtag in tweet['entities']['hashtags']:
                     coin = hashtag['tag'].lower()
@@ -112,12 +112,23 @@ def get_historical_data(coin_symbol, start_date=None, limit=30):
     })
     if response.status_code == 200:
         data = response.json()
-    
+
         if 'Data' in data and 'Data' in data['Data']:
             prices = data['Data']['Data']
             dates = [convert_unix_to_mmdd(entry['time']) for entry in prices]
             prices = [entry['close'] for entry in prices]
-            return dates, prices
+            volume_from = []
+            volume_to = []
+            volume_dates = []
+            for day in data['Data']['Data']:
+                date = day['time']
+                volume_f = day['volumefrom']
+                volume_t = day['volumeto']
+                volume_dates.append(date)
+                volume_from.append(volume_f)
+                volume_to.append(volume_t)
+
+            return dates, prices, volume_dates,volume_from, volume_to
     return None, None
 
 
@@ -203,7 +214,7 @@ def get_tweet_engagement(tweet_id):
         print(f"Virality score for tweet with ID {tweet_id}: {virality_score}")
         print(f"Sentiment for tweet with ID {tweet_id}: {sentiment}")
         
-        return virality_score, sentiment
+        return virality_score, sentiment,likes, retweets,replies,shares
     
     print(f"No engagement metrics found for tweet with ID {tweet_id}")
     return 0, 'neutral'
@@ -277,7 +288,7 @@ def collect_coin_data(coins):
                         try:
                             bot_level = bot_scores.get(tweet['author_id'])
                             if (bot_level and bot_level < bot_threshold):
-                                virality_score, sentiment = get_tweet_engagement(tweet['id'])
+                                virality_score, sentiment, *_ = get_tweet_engagement(tweet['id'])
                                 total_virality_score += virality_score
                                 sentiment_counts[sentiment] += 1
                                 if (sentiment == 'positive'):
@@ -415,6 +426,71 @@ def update_data():
 def get_coin_data(specific_coin):
     coin_data = db.session.query(CoinData).filter_by(coin=specific_coin).first()
     return coin_data
+
+
+def get_tweets_data(specific_coin):
+    query = f"#{specific_coin}"
+    url = "https://api.twitter.com/2/tweets/search/recent"
+    params = {
+                'query': query,
+                'tweet.fields': 'id,text,author_id,public_metrics',
+                'max_results': MAX_TWITTER_RESULTS,
+            }
+
+            
+    json_response = connect_to_endpoint(url, params)
+    response = json_response.get('data', [])
+
+
+    tweet_authors = list(set([int(tweet['author_id']) for tweet in response]))
+    bot_levels = bomx.get_botscores_in_batch(user_ids=tweet_authors)
+    bot_scores = {sit['user_id']:sit['bot_score'] for sit in bot_levels if sit.get('bot_score') is not None}
+
+    tweets_info = []
+
+    for tweet in response:
+        try:
+            bot_level = bot_scores.get(tweet['author_id'])
+                 
+            isBot = '1' if (bot_level and bot_level < bot_threshold) else '0'
+           
+            public_metrics = tweet["public_metrics"]
+            likes = public_metrics.get("like_count", 0)
+            retweets = public_metrics.get("retweet_count", 0)
+            replies = public_metrics.get("reply_count", 0)
+            shares = public_metrics.get("quote_count", 0)
+
+            tweet_text = tweet.get("text", "")
+            print(tweet_text)
+            if tweet_text:
+                sentiment = get_tweet_sentiment(tweet_text)
+                print('469',sentiment)
+            else:
+                sentiment = 'neutral'
+
+            tweet_info = {
+            'tweet_id': tweet['id'],
+            'isBot': isBot,
+            'sentiment': sentiment,
+            'likes': likes,
+            'retweets': retweets,
+            'replies': replies,
+            'shares': shares
+            }
+            
+            tweets_info.append(tweet_info)
+
+        except Exception as e:
+            print(f"Error processing tweet {tweet['id']}: {e}")
+            time.sleep(300)
+
+    return tweets_info
+
+
+
+
+
+
 
 def get_new_listings():
     url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/new"

@@ -85,7 +85,7 @@ def analysis():
     
     
     coin_data = CoinData.query.all()
-    # print(coin_data[0].to_dict())
+    print(coin_data[0].to_dict())
     
     return jsonify({'coin_data':[i.to_dict() for i in coin_data]})
 
@@ -110,10 +110,10 @@ def trading_coin(coin_symbol):
 
     if request.method == 'POST':
         start_date = request.form.get('start_date')
-        dates, prices = get_historical_data(coin_symbol.capitalize(), start_date=start_date)
+        dates, prices, *_ = get_historical_data(coin_symbol.capitalize(), start_date=start_date)
         return render_template('home/trading_coin.html', coin_symbol=coin_symbol, dates=dates, prices=prices, segment='trading')
  
-    dates, prices = get_historical_data(coin_symbol.capitalize())
+    dates, prices, *_ = get_historical_data(coin_symbol.capitalize())
 
     return jsonify({'coin_symbol':coin_symbol, 'dates':dates, 'prices':prices})
 
@@ -164,14 +164,16 @@ def update3():
 
 # API route to return engagement coefficients
 @blueprint.route('/home/trading/engagement_coefficient/<coin_symbol>', methods=['GET', 'POST'])
+@jwt_required()
 def engagement_coefficient(coin_symbol):
     # Fetch the alphas (engagement coefficients)
 
     # create_dummy_data()
 
-    # return 'Hello @@'
+    return 'Hello @@'
 
-    # alphas = fetch_alphas()
+    # alphas = fetch_alphas()@jwt_required()
+
    
     # # Get the coefficient for the requested coin symbol
     # if coin_symbol in alphas.index:
@@ -185,9 +187,12 @@ def engagement_coefficient(coin_symbol):
     # return jsonify(result)
 
 @blueprint.route('/coin-details/<coin_symbol>', methods=['GET', 'POST'])
+# @jwt_required()
 def get_coin_details(coin_symbol):
     coin_data = get_coin_data(coin_symbol)
-    if coin_data:
+    dates, prices, volume_dates,volume_from, volume_to= get_historical_data(coin_symbol.capitalize())
+    tweets_data = get_tweets_data(coin_symbol)
+    if coin_data and dates and prices:
         return jsonify({
                 'coin': coin_data.coin,
                 'mentions': coin_data.mentions,
@@ -197,7 +202,13 @@ def get_coin_details(coin_symbol):
                 'hype_to_market_cap': coin_data.hype_to_market_cap,
                 'one_month_prediction': coin_data.one_month_prediction,
                 'one_year_prediction': coin_data.one_year_prediction,
-                'bot_ratio': coin_data.bot_ratio
+                'bot_ratio': coin_data.bot_ratio,
+                'dates' : dates,
+                'prices' : prices,
+                'volume_dates' : volume_dates,
+                'volume_from' : volume_from,
+                'volume_to': volume_to,
+                'tweets_data' : tweets_data
         }), 200
     else:
         return jsonify({'error': 'No data found for the specified coin.'}), 404
