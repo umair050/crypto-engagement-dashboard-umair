@@ -9,8 +9,8 @@ const LineChart: React.FC<{ dates: any, prices: any }> = ({ dates, prices }) => 
   const [page, setPage] = React.useState(0);
   const itemsPerPage = 20;
 
-  const paginatedDates = dates.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
-  const paginatedPrices = prices.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
+  const paginatedDates = dates;
+  const paginatedPrices = prices;
 
   const data = {
       labels: paginatedDates,

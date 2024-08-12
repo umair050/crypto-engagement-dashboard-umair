@@ -129,7 +129,7 @@ def get_historical_data(coin_symbol, start_date=None, limit=30):
                 volume_to.append(volume_t)
 
             return dates, prices, volume_dates,volume_from, volume_to
-    return None, None
+    return None, None, None, None,None
 
 
 def get_market_cap(coin_symbol):

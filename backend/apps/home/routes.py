@@ -192,7 +192,7 @@ def get_coin_details(coin_symbol):
     coin_data = get_coin_data(coin_symbol)
     dates, prices, volume_dates,volume_from, volume_to= get_historical_data(coin_symbol.capitalize())
     tweets_data = get_tweets_data(coin_symbol)
-    if coin_data and dates and prices:
+    if coin_data and dates and prices and tweets_data:
         return jsonify({
                 'coin': coin_data.coin,
                 'mentions': coin_data.mentions,
