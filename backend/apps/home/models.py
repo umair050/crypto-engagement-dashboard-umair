@@ -16,6 +16,7 @@ class CoinData(db.Model):
     one_month_prediction = db.Column(db.Float)
     one_year_prediction = db.Column(db.Float)
     bot_ratio = db.Column(db.Float)
+    engagement_coefficient = db.Column(db.String)
 
     def to_dict(self):
         return {
@@ -27,7 +28,8 @@ class CoinData(db.Model):
             "hype_to_market_cap":self.hype_to_market_cap,
             "one_month_prediction":self.one_month_prediction,
             "one_year_prediction":self.one_year_prediction,
-            "bot_ratio":self.bot_ratio
+            "bot_ratio":self.bot_ratio,
+            "engagement_coefficient":self.engagement_coefficient,
         }
         
 class Coins(db.Model):

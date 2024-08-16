@@ -215,7 +215,7 @@ export
 const BarChart: React.FC<{ coinData: any }> = ({ coinData }) => {
   const coin = coinData.coin;
   const data = {
-      labels: ['Bot Ratio', 'Hype to Market Cap', 'Market Cap (Billions)', 'Mentions', 'One Month Prediction', 'One Year Prediction', 'Virality Score'],
+      labels: ['Bot Ratio', 'Hype to Market Cap', 'Market Cap (Billions)', 'Mentions', 'One Month Prediction', 'One Year Prediction', 'Virality Score','Engagement Coefficient'],
       datasets: [
           {
               label: `${coin} Data`,
@@ -227,6 +227,7 @@ const BarChart: React.FC<{ coinData: any }> = ({ coinData }) => {
                   coinData.one_month_prediction,
                   coinData.one_year_prediction,
                   coinData.virality_score,
+                  coinData.engagement_coefficient
               ],
               backgroundColor: 'rgba(255, 255, 255, 0.7)',
               borderColor: 'rgba(255, 255, 255, 1)',

@@ -39,8 +39,8 @@ function getMonthNames() {
 }
 
 // Function to create an array that starts from 0 and ends at the prediction value
-function generatePrices(targetValue: number) {
-  return [0, targetValue];
+function generatePrices(currentValue : number,targetValue: number) {
+  return [currentValue, targetValue];
 }
 
 // Get the current and next month names
@@ -84,11 +84,6 @@ function getMonthYearLabels() {
   labels.push(lastLabel);
 
   return labels;
-}
-
-// Function to create an array with only the start value (0) and the prediction value
-function generateYearlyPrices(targetValue: number) {
-  return [0, targetValue];
 }
 
 // Get the first and last month-year labels for the chart
@@ -196,7 +191,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
   if (!access) {
     return <></>
   }
-  let response,data,tableData,prices,yearlyPrices;
+  let response,data,tableData,monthlyPrices,yearlyPrices;
   try {
     response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND}coin-details/${coin}`, { headers: { "Authorization": `Bearer ${access.value}` } });
     data = response.data
@@ -204,8 +199,11 @@ const Page: React.FC<PageProps> = async ({ params }) => {
       return <p>No data found for the coin: {coin}.</p>;
     }
     tableData = data.tweets_data
-    prices = generatePrices(data.one_month_prediction);
-    yearlyPrices = generateYearlyPrices(data.one_year_prediction);
+
+    let lastPrice = data.prices[data.prices.length - 1];
+
+    monthlyPrices = generatePrices(lastPrice,data.one_month_prediction);
+    yearlyPrices = generatePrices(lastPrice,data.one_year_prediction);
 
 
 
@@ -237,12 +235,10 @@ const Page: React.FC<PageProps> = async ({ params }) => {
             ></div>
           </div>
           <div>
-            {/* <Charts data={dummyData} /> */}
-
             <div className="chart-cont">
               <div>
                 <div>Monthly Prediction</div>
-                <LineChart dates={chartDates} prices={prices} />
+                <LineChart dates={chartDates} prices={monthlyPrices} />
               </div>
               <div>
                 <div>Yearly Prediction</div>
@@ -263,11 +259,9 @@ const Page: React.FC<PageProps> = async ({ params }) => {
               </div>
               <div>
                 <div>Adoption Rate</div>
-                <LineChart dates={""} prices={""} />
+                <LineChart dates={data.volume_dates} prices={data.adoption_rates} />
               </div>
             </div>
-
-            {/* <Charts data={dummyData1} /> */}
           </div>
         </main>
       </main>

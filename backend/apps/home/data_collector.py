@@ -7,7 +7,7 @@ import time
 from textblob import TextBlob
 
 from .models import CoinData, Coins, db
-
+from .analytics import fetch_alphas
 import botometer, tweepy
 import re, json
 
@@ -120,16 +120,29 @@ def get_historical_data(coin_symbol, start_date=None, limit=30):
             volume_from = []
             volume_to = []
             volume_dates = []
+            adoption_rates = []
+
             for day in data['Data']['Data']:
                 date = day['time']
                 volume_f = day['volumefrom']
                 volume_t = day['volumeto']
-                volume_dates.append(date)
+                volume_dates.append(convert_unix_to_mmdd(date))
                 volume_from.append(volume_f)
                 volume_to.append(volume_t)
 
-            return dates, prices, volume_dates,volume_from, volume_to
-    return None, None, None, None,None
+            for i in range(1, len(volume_from)):
+                previous_volume = volume_from[i-1]
+                current_volume = volume_from[i]
+                
+                if previous_volume > 0:
+                    growth_rate = ((current_volume - previous_volume) / previous_volume) * 100
+                else:
+                    growth_rate = 0  # or handle this case as needed
+                
+                adoption_rates.append(growth_rate)
+            
+            return dates, prices, volume_dates,volume_from, volume_to,adoption_rates
+    return None, None, None, None,None,None
 
 
 def get_market_cap(coin_symbol):
@@ -186,21 +199,33 @@ def get_tweet_sentiment(tweet_text):
     else:
         return 'neutral'
 
-def get_tweet_engagement(tweet_id):
-    print(f"Getting engagement metrics for tweet with ID {tweet_id} ...")
-    
-    url = f"https://api.twitter.com/2/tweets?ids={tweet_id}&tweet.fields=public_metrics,text"
+def get_user_followers_count(user_id):
+    url = f"https://api.twitter.com/2/users/{user_id}?user.fields=public_metrics"
     json_response = connect_to_endpoint(url)
 
-    if "data" in json_response and len(json_response["data"]) > 0:
-        tweet = json_response["data"][0]
+    if "data" in json_response:
+        followers_count = json_response["data"]["public_metrics"]["followers_count"]
+        tweet_count = json_response["data"]["public_metrics"]["tweet_count"]
+        print(f"User has tweeted {tweet_count} times.")
+
+        return followers_count, tweet_count
+
+    return 0
+
+def get_tweet_engagement(tweet):
+    tweet_id = tweet['id']
+    print(f"Getting engagement metrics for tweet with ID {tweet_id} ...")
+   
+    if tweet:
         public_metrics = tweet["public_metrics"]
+        user_id = tweet["author_id"]
         likes = public_metrics.get("like_count", 0)
         retweets = public_metrics.get("retweet_count", 0)
         replies = public_metrics.get("reply_count", 0)
         shares = public_metrics.get("quote_count", 0)
         views = 0  # Twitter API v2 doesn't provide view count yet
 
+        followers_count,tweet_count = get_user_followers_count(user_id)
         # Calculate virality score
         virality_score = likes + retweets + replies + shares + views
 
@@ -214,7 +239,7 @@ def get_tweet_engagement(tweet_id):
         print(f"Virality score for tweet with ID {tweet_id}: {virality_score}")
         print(f"Sentiment for tweet with ID {tweet_id}: {sentiment}")
         
-        return virality_score, sentiment,likes, retweets,replies,shares
+        return virality_score, sentiment,likes,retweets,replies,shares,followers_count,tweet_count
     
     print(f"No engagement metrics found for tweet with ID {tweet_id}")
     return 0, 'neutral'
@@ -267,7 +292,7 @@ def collect_coin_data(coins):
                     url = "https://api.twitter.com/2/tweets/search/recent"
                     params = {
                         'query': query,
-                        'tweet.fields': 'id,text,author_id',
+                        'tweet.fields': 'id,text,author_id,public_metrics',
                         'max_results': MAX_TWITTER_RESULTS,
                     }
                     json_response = connect_to_endpoint(url, params)
@@ -275,6 +300,7 @@ def collect_coin_data(coins):
                     response = json_response.get('data', [])
                     tweet_authors = list(set([int(tweet['author_id']) for tweet in response]))
                     
+                
                     bot_levels = bomx.get_botscores_in_batch(user_ids=tweet_authors)
                     bot_scores = {sit['user_id']:sit['bot_score'] for sit in bot_levels if sit.get('bot_score') is not None}
                     
@@ -282,13 +308,24 @@ def collect_coin_data(coins):
 
                     bot_count = 0
                     total_count = 0
+                    engagement_coefficient_data = []
+                    length_of_response = len(response)
 
                     for tweet in response:
                         time.sleep(int(DELAY_BETWEEN_EACH_TWITTER_API_CALL))
                         try:
                             bot_level = bot_scores.get(tweet['author_id'])
                             if (bot_level and bot_level < bot_threshold):
-                                virality_score, sentiment, *_ = get_tweet_engagement(tweet['id'])
+                                virality_score, sentiment,likes,retweets,replies,shares,followers_count,tweet_count = get_tweet_engagement(tweet)
+                                engagement_coefficient_data.append({
+                                    'coin' : coin,
+                                    'like_count': likes,
+                                    'retweet_count': retweets,
+                                    'reply_count': replies,
+                                    'num_tweets': tweet_count,
+                                    'followers_count': followers_count
+                                })
+
                                 total_virality_score += virality_score
                                 sentiment_counts[sentiment] += 1
                                 if (sentiment == 'positive'):
@@ -303,6 +340,9 @@ def collect_coin_data(coins):
                         except:
                             time.sleep(300)
                         total_count += 1
+
+                    engagement_coefficient = fetch_alphas(engagement_coefficient_data)
+
                     virality_score = total_virality_score / len(response) if response else 0
 
                     if max_observed_score < virality_score:
@@ -381,7 +421,8 @@ def collect_coin_data(coins):
                         'hype_to_market_cap': hype_to_market_cap,
                         'one_month_pred': one_month_pred,
                         'one_year_pred': one_year_pred,
-                        'bot_ratio': bot_count / total_count
+                        'bot_ratio': bot_count / total_count,
+                        'engagement_coefficient' : engagement_coefficient
                     })
         except Exception as e:
             print("Problem processing:", coin)
@@ -394,12 +435,14 @@ def update_data():
     global max_observed_score
     # Fetch all coins from the database
     coins_query = Coins.query.with_entities(Coins.coin).all()
-
+   
     # Extract the coin names from the query result
     new_coins = [coin[0] for coin in coins_query]    
+    # new_coins = ['btc']
     # To make sure we save stuff before they end
     for specific_coin in new_coins:
-        coin_data_list = collect_coin_data([specific_coin])
+        coin_data_list = collect_coin_data([specific_coin])    
+        print('coin_data_list' , coin_data_list)    
         if (len(coin_data_list)):
             coin_data_list_handles = [i['coin'] for i in coin_data_list]
             print(coin_data_list_handles)
@@ -417,7 +460,8 @@ def update_data():
                     hype_to_market_cap=coin_data['hype_to_market_cap'],
                     one_month_prediction=coin_data['one_month_pred'],
                     one_year_prediction=coin_data['one_year_pred'],
-                    bot_ratio=coin_data['bot_ratio']
+                    bot_ratio=coin_data['bot_ratio'],
+                    engagement_coefficient= coin_data['engagement_coefficient']
                 )
                 db.session.add(coin_data_obj)
             db.session.commit()
@@ -451,9 +495,8 @@ def get_tweets_data(specific_coin):
     for tweet in response:
         try:
             bot_level = bot_scores.get(tweet['author_id'])
-                 
             isBot = '1' if (bot_level and bot_level < bot_threshold) else '0'
-           
+            
             public_metrics = tweet["public_metrics"]
             likes = public_metrics.get("like_count", 0)
             retweets = public_metrics.get("retweet_count", 0)
@@ -461,7 +504,7 @@ def get_tweets_data(specific_coin):
             shares = public_metrics.get("quote_count", 0)
 
             tweet_text = tweet.get("text", "")
-            print(tweet_text)
+            # print(tweet_text)
             if tweet_text:
                 sentiment = get_tweet_sentiment(tweet_text)
                 print('469',sentiment)
@@ -487,32 +530,45 @@ def get_tweets_data(specific_coin):
     return tweets_info
 
 
-
-
-
-
-
 def get_new_listings():
-    url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/new"
+    new_coins_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/new"
+    latest_coins_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/trending/latest"
+   
     parameters = {
-        "convert": "USD"  # Currency to convert to
+        'start': '1',  # Starting rank
+        'limit': '3',  # Number of results
+        'convert': 'USD'  # Currency conversion
     }
     headers = {
         "Accepts": "application/json",
         "X-CMC_PRO_API_KEY": coinmarket_key,
     }
 
-    response = requests.get(url, headers=headers, params=parameters)
-    # Parse the JSON response
-    data = json.loads(response.text)
-
-    symbols = []
-    for coin in data["data"]:
-        coin = data["data"][coin]
-        symbol = coin["symbol"]
-        symbols.append(symbol)
+    # Fetch new coins
+    response_new = requests.get(new_coins_url, headers=headers, params=parameters)
+    data_new = json.loads(response_new.text)
+    symbols_new = [crypto['symbol'] for crypto in data_new['data']]
     
-    return symbols
+    # Fetch latest coins
+    response_latest = requests.get(latest_coins_url, headers=headers, params=parameters)
+    data_latest = json.loads(response_latest.text)
+    symbols_latest = [crypto['symbol'] for crypto in data_latest['data']]
+    
+    # Merge both lists of symbols
+    all_symbols = list(set(symbols_new + symbols_latest))  # Using set to avoid duplicates
+
+    Coins.query.delete()
+
+    # Insert new coins into the database
+    for symbol in all_symbols:
+        new_coin = Coins(coin=symbol)
+        db.session.add(new_coin)
+
+    # Commit the session to save changes
+    db.session.commit()
+
+    return all_symbols
+  
 
 
 

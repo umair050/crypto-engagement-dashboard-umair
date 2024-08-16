@@ -6,10 +6,7 @@ from .data_collector import *
 from flask_jwt_extended import JWTManager as JWT, jwt_required, get_jwt_identity, create_access_token
 from .models import User
 from apps import db, bcrypt
-try:
-    from .analytics import fetch_alphas,create_dummy_data
-except ImportError as e:
-    print(f"Error importing: {e}")
+from .analytics import fetch_alphas
 
 @blueprint.route('/index', methods=['GET'])
 @jwt_required()
@@ -136,13 +133,26 @@ def trading_coin_remove(coin_id):
 @jwt_required()
 def update1():
     try:
+        # discover coins from twitter
         discover_new_coins()
     except Exception as e:
         return jsonify({'message':'Failed to discover coins'}), 400
     return jsonify({'message':'Successful'}), 200
 
+
+@blueprint.route('/home/newcoins', methods=['GET'])
+# @jwt_required()
+def update3():
+    try:
+        # get new coin from coin market api 
+        data = get_new_listings()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({'message':'Failed to update coins'}), 400
+    return jsonify({'message':'Successful'}), 200
+
 @blueprint.route('/home/updatecoins', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def update2():
     try:
         update_data()
@@ -150,49 +160,20 @@ def update2():
         return jsonify({'message':'Failed to update coins'}), 400
     return jsonify({'message':'Successful'}), 200
 
-@blueprint.route('/home/newcoins', methods=['GET'])
-@jwt_required()
-def update3():
-    try:
-        data = get_new_listings()
-        # print(data)
-    except Exception as e:
-        return jsonify({'message':'Failed to update coins'}), 400
-    return jsonify({'message':'Successful'}), 200
-
-
-
-# API route to return engagement coefficients
-@blueprint.route('/home/trading/engagement_coefficient/<coin_symbol>', methods=['GET', 'POST'])
-@jwt_required()
-def engagement_coefficient(coin_symbol):
-    # Fetch the alphas (engagement coefficients)
-
-    # create_dummy_data()
-
-    return 'Hello @@'
-
-    # alphas = fetch_alphas()@jwt_required()
-
-   
-    # # Get the coefficient for the requested coin symbol
-    # if coin_symbol in alphas.index:
-    #     result = {coin_symbol: alphas[coin_symbol]}
-    # else:
-    #     result = {"error": "Coin symbol not found"}
-
-    # print('result',result)
-    
-    # # Return the result as JSON
-    # return jsonify(result)
-
 @blueprint.route('/coin-details/<coin_symbol>', methods=['GET', 'POST'])
-# @jwt_required()
+@jwt_required()
 def get_coin_details(coin_symbol):
+
+    print('coin_symbol',coin_symbol)
+
     coin_data = get_coin_data(coin_symbol)
-    dates, prices, volume_dates,volume_from, volume_to= get_historical_data(coin_symbol.capitalize())
+    dates, prices, volume_dates,volume_from, volume_to,adoption_rates = get_historical_data(coin_symbol.capitalize())
     tweets_data = get_tweets_data(coin_symbol)
-    if coin_data and dates and prices and tweets_data:
+    
+    print('coin_data',coin_data,'dates',dates,'prices',prices,'tweets_data',tweets_data)
+    if not tweets_data:
+        tweets_data = []
+    if coin_data and dates and prices:
         return jsonify({
                 'coin': coin_data.coin,
                 'mentions': coin_data.mentions,
@@ -208,7 +189,8 @@ def get_coin_details(coin_symbol):
                 'volume_dates' : volume_dates,
                 'volume_from' : volume_from,
                 'volume_to': volume_to,
-                'tweets_data' : tweets_data
+                'tweets_data' : tweets_data,
+                'adoption_rates' : adoption_rates
         }), 200
     else:
         return jsonify({'error': 'No data found for the specified coin.'}), 404

@@ -5,6 +5,7 @@ import axios from "axios";
 import { BarChart } from "@/components/charts/Chart";
 import Charts from "@/components/pages/charts";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 
 export default async function Home() {
@@ -29,14 +30,14 @@ export default async function Home() {
         <TopNav active={-1} />
         <div className="chart-cont">
           {res_table && res_table.data.coin_data.map((item: any, idx: number) => (
-            <div key={idx}>
+              <Link key={idx} href={`/coins-details/${item.coin}`}>
               <div style={{}}>{item.coin}</div>
               <div>
                 <BarChart coinData={item} />
               </div>
-            </div>
+            </Link>
           ))}
-          <Charts />
+          {/* <Charts /> */}
         </div>
       </main>
     </main>
