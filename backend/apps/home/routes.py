@@ -28,8 +28,11 @@ def register():
     if not username or not password:
         return jsonify({'message': 'Missing username or password'}), 400
 
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-    new_user = User(username=username, password=bcrypt.generate_password_hash(password))
+    # new_user = User(username=username, password=bcrypt.generate_password_hash(password))
+    new_user = User(username=username, password=hashed_password)
+
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'Registeration sucessful'}), 200
@@ -164,13 +167,11 @@ def update2():
 @jwt_required()
 def get_coin_details(coin_symbol):
 
-    print('coin_symbol',coin_symbol)
-
     coin_data = get_coin_data(coin_symbol)
     dates, prices, volume_dates,volume_from, volume_to,adoption_rates = get_historical_data(coin_symbol.capitalize())
     tweets_data = get_tweets_data(coin_symbol)
     
-    print('coin_data',coin_data,'dates',dates,'prices',prices,'tweets_data',tweets_data)
+    # print('coin_data',coin_data,'dates',dates,'prices',prices,'tweets_data',tweets_data)
     if not tweets_data:
         tweets_data = []
     if coin_data and dates and prices:

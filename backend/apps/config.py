@@ -6,22 +6,16 @@ class Config(object):
 
     # Assets Management
     ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')  
-    
+
     # Set up the App SECRET_KEY
     SECRET_KEY  = os.getenv('SECRET_KEY', None)
     if not SECRET_KEY:
-        SECRET_KEY = ''.join(random.choice( string.ascii_lowercase  ) for i in range( 32 ))     
+        SECRET_KEY = ''.join(random.choice(string.ascii_lowercase) for i in range(32))     
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    USE_SQLITE  = True 
-
-    if USE_SQLITE:
-
-        basedir = os.path.abspath(os.path.dirname(__file__))
-        # This will create a file in <app> FOLDER
-        # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join("/var/data/", 'db.sqlite3')
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'db.sqlite3')
+    # Use PostgreSQL instead of SQLite
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     
 class ProductionConfig(Config):
     DEBUG = False
@@ -38,5 +32,5 @@ class DebugConfig(Config):
 # Load all possible configurations
 config_dict = {
     'Production': ProductionConfig,
-    'Debug'     : DebugConfig
+    'Debug': DebugConfig
 }
