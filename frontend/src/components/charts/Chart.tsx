@@ -224,8 +224,8 @@ const BarChart: React.FC<{ coinData: any }> = ({ coinData }) => {
                   coinData.hype_to_market_cap,
                   coinData.market_cap / 1e9, // Convert Market Cap to Billions
                   coinData.mentions,
-                  coinData.one_month_prediction,
-                  coinData.one_year_prediction,
+                  coinData.one_month_prediction[coinData.one_month_prediction-1],
+                  coinData.one_year_prediction[coinData.one_year_prediction.length-1],
                   coinData.virality_score,
                   coinData.engagement_coefficient
               ],

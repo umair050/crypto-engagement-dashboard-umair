@@ -85,7 +85,7 @@ def analysis():
     
     
     coin_data = CoinData.query.all()
-    print(coin_data[0].to_dict())
+    # print(coin_data[0].to_dict())
     
     return jsonify({'coin_data':[i.to_dict() for i in coin_data]})
 
@@ -185,6 +185,7 @@ def get_coin_details(coin_symbol):
                 'one_month_prediction': coin_data.one_month_prediction,
                 'one_year_prediction': coin_data.one_year_prediction,
                 'bot_ratio': coin_data.bot_ratio,
+                'created_at' : coin_data.created_at,
                 'dates' : dates,
                 'prices' : prices,
                 'volume_dates' : volume_dates,

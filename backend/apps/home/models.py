@@ -4,6 +4,10 @@ from apps import db, login_manager
 
 from apps.authentication.util import hash_pass
 
+from sqlalchemy import ARRAY, Float  # Add the necessary imports
+from datetime import datetime
+
+
 class CoinData(db.Model):
     __tablename__ = 'coin_data'
     id = db.Column(db.Integer, primary_key=True)
@@ -13,10 +17,11 @@ class CoinData(db.Model):
     virality_score = db.Column(db.Float)
     sentiment_score = db.Column(db.String)
     hype_to_market_cap = db.Column(db.Float)
-    one_month_prediction = db.Column(db.Float)
-    one_year_prediction = db.Column(db.Float)
+    one_month_prediction = db.Column(ARRAY(Float))  # Changed to ARRAY
+    one_year_prediction = db.Column(ARRAY(Float)) 
     bot_ratio = db.Column(db.Float)
     engagement_coefficient = db.Column(db.String)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow) 
 
     def to_dict(self):
         return {
@@ -30,6 +35,7 @@ class CoinData(db.Model):
             "one_year_prediction":self.one_year_prediction,
             "bot_ratio":self.bot_ratio,
             "engagement_coefficient":self.engagement_coefficient,
+            "created_at":self.created_at
         }
         
 class Coins(db.Model):

@@ -35,7 +35,11 @@ function getMonthNames() {
   const currentMonthIndex = new Date().getMonth();
   const currentMonthName = monthNames[currentMonthIndex];
   const nextMonthName = monthNames[(currentMonthIndex + 1) % 12];
-  return { currentMonthName, nextMonthName };
+  const nextMonthNames = [];
+  for (let i = 1; i <= 11; i++) {
+    nextMonthNames.push(monthNames[(currentMonthIndex + i) % 12]);
+  }
+  return { currentMonthName, nextMonthName,nextMonthNames };
 }
 
 // Function to create an array that starts from 0 and ends at the prediction value
@@ -44,10 +48,10 @@ function generatePrices(currentValue : number,targetValue: number) {
 }
 
 // Get the current and next month names
-const { currentMonthName, nextMonthName } = getMonthNames();
+const { currentMonthName,nextMonthNames } = getMonthNames();
 
 // Define the dates (month names) for the chart
-const chartDates = [currentMonthName, nextMonthName];
+const chartDates = [currentMonthName, ...nextMonthNames];
 
 // Directly assign the prices from 0 to the prediction value
 
@@ -73,116 +77,21 @@ function getMonthYearLabels() {
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
 
-  // First label: Current date
-  const firstLabel = `${currentDay} ${monthNames[currentMonth]} ${currentYear}`;
-  labels.push(firstLabel);
-
-  // Last label: Same date next year
-  const nextYearMonthIndex = currentMonth;
-  const nextYear = currentYear + 1;
-  const lastLabel = `${currentDay} ${monthNames[nextYearMonthIndex]} ${nextYear}`;
-  labels.push(lastLabel);
+  // Generate labels for the next 5 years including the current year
+  for (let i = 0; i < 5; i++) {
+    const year = currentYear + i;
+    const label = `${currentDay} ${monthNames[currentMonth]} ${year}`;
+    labels.push(label);
+  }
 
   return labels;
 }
+
 
 // Get the first and last month-year labels for the chart
 const chartYearlyDates = getMonthYearLabels();
 
 // Generate the prices with only 0 and the prediction value
-
-const tableData = [
-  {
-    isBot: "0",
-    likes: 0,
-    replies: 0,
-    retweets: 2,
-    sentiment: "neutral",
-    shares: 0,
-    tweet_id: "1821919096121819333",
-  },
-  {
-    isBot: "0",
-    likes: 0,
-    replies: 0,
-    retweets: 7,
-    sentiment: "neutral",
-    shares: 0,
-    tweet_id: "1821919090773983342",
-  },
-  {
-    isBot: "0",
-    likes: 0,
-    replies: 0,
-    retweets: 6,
-    sentiment: "neutral",
-    shares: 0,
-    tweet_id: "1821919080288555305",
-  },
-  {
-    isBot: "1",
-    likes: 0,
-    replies: 0,
-    retweets: 0,
-    sentiment: "negative",
-    shares: 0,
-    tweet_id: "1821919070209634663",
-  },
-  {
-    isBot: "0",
-    likes: 0,
-    replies: 0,
-    retweets: 272,
-    sentiment: "neutral",
-    shares: 0,
-    tweet_id: "1821919069823758645",
-  },
-  {
-    isBot: "0",
-    likes: 10,
-    replies: 0,
-    retweets: 2,
-    sentiment: "neutral",
-    shares: 0,
-    tweet_id: "1821919069408317575",
-  },
-  {
-    isBot: "0",
-    likes: 1,
-    replies: 0,
-    retweets: 0,
-    sentiment: "positive",
-    shares: 0,
-    tweet_id: "1821919046083682688",
-  },
-  {
-    isBot: "1",
-    likes: 0,
-    replies: 0,
-    retweets: 11,
-    sentiment: "positive",
-    shares: 0,
-    tweet_id: "1821919044334686279",
-  },
-  {
-    isBot: "1",
-    likes: 0,
-    replies: 0,
-    retweets: 10,
-    sentiment: "neutral",
-    shares: 0,
-    tweet_id: "1821919033110790362",
-  },
-  {
-    isBot: "1",
-    likes: 0,
-    replies: 0,
-    retweets: 5,
-    sentiment: "neutral",
-    shares: 0,
-    tweet_id: "1821919028858028037",
-  },
-];
 
 const Page: React.FC<PageProps> = async ({ params }) => {
   const access = cookies().get("access")
@@ -199,13 +108,6 @@ const Page: React.FC<PageProps> = async ({ params }) => {
       return <p>No data found for the coin: {coin}.</p>;
     }
     tableData = data.tweets_data
-
-    let lastPrice = data.prices[data.prices.length - 1];
-
-    monthlyPrices = generatePrices(lastPrice,data.one_month_prediction);
-    yearlyPrices = generatePrices(lastPrice,data.one_year_prediction);
-
-
 
   } catch (e: any) {
     console.log(e)
@@ -238,11 +140,11 @@ const Page: React.FC<PageProps> = async ({ params }) => {
             <div className="chart-cont">
               <div>
                 <div>Monthly Prediction</div>
-                <LineChart dates={chartDates} prices={monthlyPrices} />
+                <LineChart dates={chartDates} prices={data.one_month_prediction} />
               </div>
               <div>
                 <div>Yearly Prediction</div>
-                <LineChart dates={chartYearlyDates} prices={yearlyPrices} />
+                <LineChart dates={chartYearlyDates} prices={data.one_year_prediction} />
               </div>
             </div>
             <div className="chart-cont-3">
