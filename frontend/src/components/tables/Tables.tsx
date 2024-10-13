@@ -2,86 +2,55 @@
 import React from "react";
 import styles from "../../styles/css/Tables.module.css"; // Import the CSS module
 
-type Row = {
-  key: string;
-  likes: string;
-  retweets: string;
-  sentiments: string;
-  bot: string;
-  not_bot: string;
-};
+interface TableData {
+  isBot: string;
+  likes: number;
+  replies: number;
+  retweets: number;
+  sentiment: string;
+  shares: number;
+  tweet_id: string;
+}
 
-type Column = {
-  key: keyof Row;
-  label: string;
-};
+interface TableProps {
+  tableProps: TableData[];
+}
 
-const Tables = () => {
-  const rows: Row[] = [
-    {
-      key: "1",
-      likes: "Tony Reichert",
-      retweets: "CEO",
-      sentiments: "Active",
-      bot: "Active",
-      not_bot: "Active",
-    },
-    {
-      key: "2",
-      likes: "Tony Reichert",
-      retweets: "CEO",
-      sentiments: "Active",
-      bot: "Active",
-      not_bot: "Active",
-    },
-  ];
-
-  const columns: Column[] = [
-    {
-      key: "likes",
-      label: "Likes",
-    },
-    {
-      key: "retweets",
-      label: "Retweets",
-    },
-    {
-      key: "sentiments",
-      label: "Sentiments",
-    },
-    {
-      key: "bot",
-      label: "Bot",
-    },
-    {
-      key: "not_bot",
-      label: "Not Bot",
-    },
-  ];
+const Tables: React.FC<TableProps> = ({ tableProps }) => {
 
   return (
-    <table className={styles.table}>
+     <div>
+         {tableProps && 
+
+     <table className={styles.table}>
       <thead>
         <tr>
-          {columns.map((column) => (
-            <th key={column.key} className={styles.header}>
-              {column.label}
-            </th>
-          ))}
+          <th className={styles.header}>Tweet ID</th>
+          <th className={styles.header}>Is Bot</th>
+          <th className={styles.header}>Likes</th>
+          <th className={styles.header}>Replies</th>
+          <th className={styles.header}>Retweets</th>
+          <th className={styles.header}>Sentiment</th>
+          <th className={styles.header}>Shares</th>
         </tr>
       </thead>
       <tbody>
-        {rows.map((row) => (
-          <tr key={row.key}>
-            {columns.map((column) => (
-              <td key={column.key} className={styles.cell}>
-                {row[column.key]}
-              </td>
-            ))}
+        {tableProps.map((row, index) => (
+          <tr key={index}>
+            <td className={styles.cell}>{row.tweet_id}</td>
+
+            <td className={styles.cell}>{row.isBot}</td>
+            <td className={styles.cell}>{row.likes}</td>
+            <td className={styles.cell}>{row.replies}</td>
+            <td className={styles.cell}>{row.retweets}</td>
+            <td className={styles.cell}>{row.sentiment}</td>
+            <td className={styles.cell}>{row.shares}</td>
           </tr>
         ))}
       </tbody>
     </table>
+}
+        </div>
   );
 };
 

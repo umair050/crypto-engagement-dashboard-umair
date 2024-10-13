@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   }
 
 
-  if (!accessToken && (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/charts' || request.nextUrl.pathname === '/analysis')) {
+  if (!accessToken && (request.nextUrl.pathname === '/charts' || request.nextUrl.pathname === '/analysis')) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
@@ -20,5 +20,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/charts', '/analysis', '/login', '/register'],
+  matcher: ['/charts', '/analysis', '/login', '/register'],
 };

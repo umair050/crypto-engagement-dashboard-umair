@@ -9,8 +9,8 @@ const LineChart: React.FC<{ dates: any, prices: any }> = ({ dates, prices }) => 
   const [page, setPage] = React.useState(0);
   const itemsPerPage = 20;
 
-  const paginatedDates = dates.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
-  const paginatedPrices = prices.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
+  const paginatedDates = dates;
+  const paginatedPrices = prices;
 
   const data = {
       labels: paginatedDates,
@@ -81,7 +81,7 @@ const LineChart: React.FC<{ dates: any, prices: any }> = ({ dates, prices }) => 
                     <Line data={data} options={options} />
                 </div>
             </div>
-            <div className="pagination-controls">
+{/*             <div className="pagination-controls">
                 <button
                     onClick={() => setPage(page - 1)}
                     disabled={page === 0}
@@ -97,7 +97,7 @@ const LineChart: React.FC<{ dates: any, prices: any }> = ({ dates, prices }) => 
                 >
                     <span className="chevron right"></span>
                 </button>
-            </div>
+            </div> */}
             <style jsx>{`
                 .chart-container {
                     position: relative;
@@ -215,7 +215,7 @@ export
 const BarChart: React.FC<{ coinData: any }> = ({ coinData }) => {
   const coin = coinData.coin;
   const data = {
-      labels: ['Bot Ratio', 'Hype to Market Cap', 'Market Cap (Billions)', 'Mentions', 'One Month Prediction', 'One Year Prediction', 'Virality Score'],
+      labels: ['Bot Ratio', 'Hype to Market Cap', 'Market Cap (Billions)', 'Mentions', 'One Month Prediction', 'One Year Prediction', 'Virality Score','Engagement Coefficient'],
       datasets: [
           {
               label: `${coin} Data`,
@@ -224,9 +224,10 @@ const BarChart: React.FC<{ coinData: any }> = ({ coinData }) => {
                   coinData.hype_to_market_cap,
                   coinData.market_cap / 1e9, // Convert Market Cap to Billions
                   coinData.mentions,
-                  coinData.one_month_prediction,
-                  coinData.one_year_prediction,
+                  coinData.one_month_prediction[coinData.one_month_prediction-1],
+                  coinData.one_year_prediction[coinData.one_year_prediction.length-1],
                   coinData.virality_score,
+                  coinData.engagement_coefficient
               ],
               backgroundColor: 'rgba(255, 255, 255, 0.7)',
               borderColor: 'rgba(255, 255, 255, 1)',

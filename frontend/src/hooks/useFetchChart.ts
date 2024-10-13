@@ -21,6 +21,7 @@ export const useFetchCharts = () => {
 
             const fetchChartPromises = res.coins.map(async (coin: any) => {
                 const cres = await fetchChart(coin);
+                console.log('cres',cres)
                 if (cres !== null) {
                     return { coin, data: { dates: cres.dates, prices: cres.prices } };
                 }
