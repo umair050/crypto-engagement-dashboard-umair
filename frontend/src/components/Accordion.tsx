@@ -1,24 +1,28 @@
-"use client"
-import { PropsWithChildren, useState } from 'react';
-import styled from 'styled-components'; 
-import Collapse from './Collapse';
-import RichText from './RichText';
-import React from 'react';
-import { media } from '@/utils/media';
+"use client";
+import { PropsWithChildren, useState } from "react";
+import styled from "styled-components";
+import Collapse from "./Collapse";
+import RichText from "./RichText";
+import React from "react";
+import { media } from "@/utils/media";
 
 interface AccordionProps {
   title: string;
   isOpen?: boolean;
 }
 
-export default function Accordion({ title, isOpen, children }: PropsWithChildren<AccordionProps>) {
+export default function Accordion({
+  title,
+  isOpen,
+  children,
+}: PropsWithChildren<AccordionProps>) {
   const [hasCollapsed, setHasCollapsed] = useState(!isOpen);
-  const isActive = !hasCollapsed;
+  const isactive = !hasCollapsed;
   return (
     <AccordionWrapper onClick={() => setHasCollapsed((prev) => !prev)}>
       <TitleWrapper>
         <Title>{title}</Title>
-        <Icon isActive={isActive}>
+        <Icon isActive={isactive}>
           <svg
             viewBox="0 0 24 24"
             focusable="false"
@@ -26,11 +30,14 @@ export default function Accordion({ title, isOpen, children }: PropsWithChildren
             aria-hidden="true"
             preserveAspectRatio="none"
           >
-            <path fill="currentColor" d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
+            <path
+              fill="currentColor"
+              d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            ></path>
           </svg>
         </Icon>
       </TitleWrapper>
-      <Collapse isOpen={isActive} duration={300}>
+      <Collapse isOpen={isactive} duration={300}>
         <Description>
           <RichText>{children}</RichText>
         </Description>
@@ -77,7 +84,7 @@ const AccordionWrapper = styled.div`
   border-radius: 0.6rem;
   transition: opacity 0.2s;
 
-  ${media('<=desktop')} {
+  ${media("<=desktop")} {
     width: 100%;
   }
 `;

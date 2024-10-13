@@ -1,38 +1,38 @@
-import NextImage from 'next/image';
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import NextImage from "next/image";
+import React, { useState } from "react";
+import styled from "styled-components";
 
-import { media } from '@/utils/media';
-import Collapse from '@/components/Collapse';
-import OverTitle from '@/components/OverTitle';
-import SectionTitle from '@/components/SectionTitle';
-import ThreeLayersCircle from '@/components/ThreeLayersCircle';
-import Container from '@/components/Container'; 
+import { media } from "@/utils/media";
+import Collapse from "@/components/Collapse";
+import OverTitle from "@/components/OverTitle";
+import SectionTitle from "@/components/SectionTitle";
+import ThreeLayersCircle from "@/components/ThreeLayersCircle";
+import Container from "@/components/Container";
 
 const TABS = [
   {
-    title: 'Find relevant media contacts - multiline title',
+    title: "Find relevant media contacts - multiline title",
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
-    imageUrl: '/demo-illustration-3.png',
-    baseColor: '249,82,120',
-    secondColor: '221,9,57',
+      "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>",
+    imageUrl: "/demo-illustration-3.png",
+    baseColor: "249,82,120",
+    secondColor: "221,9,57",
   },
   {
-    title: 'Another amazing feature',
+    title: "Another amazing feature",
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
-    imageUrl: '/demo-illustration-4.png',
-    baseColor: '57,148,224',
-    secondColor: '99,172,232',
+      "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>",
+    imageUrl: "/demo-illustration-4.png",
+    baseColor: "57,148,224",
+    secondColor: "99,172,232",
   },
   {
-    title: 'And yet... another truly fascinating feature',
+    title: "And yet... another truly fascinating feature",
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
-    imageUrl: '/demo-illustration-5.png',
-    baseColor: '88,193,132',
-    secondColor: '124,207,158',
+      "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>",
+    imageUrl: "/demo-illustration-5.png",
+    baseColor: "88,193,132",
+    secondColor: "124,207,158",
   },
 ];
 
@@ -40,30 +40,41 @@ export default function FeaturesGallery() {
   const [currentTab, setCurrentTab] = useState(TABS[0]);
 
   const imagesMarkup = TABS.map((singleTab, idx) => {
-    const isActive = singleTab.title === currentTab.title;
+    const isactive = singleTab.title === currentTab.title;
     const isFirst = idx === 0;
 
     return (
-      <ImageContainer key={singleTab.title} isActive={isActive}>
-        <NextImage src={singleTab.imageUrl} alt={singleTab.title} layout="fill" objectFit="contain" priority={isFirst} />
+      <ImageContainer key={singleTab.title} isActive={isactive}>
+        <NextImage
+          src={singleTab.imageUrl}
+          alt={singleTab.title}
+          layout="fill"
+          objectFit="contain"
+          priority={isFirst}
+        />
       </ImageContainer>
     );
   });
 
   const tabsMarkup = TABS.map((singleTab, idx) => {
-    const isActive = singleTab.title === currentTab.title;
+    const isactive = singleTab.title === currentTab.title;
 
     return (
-      <Tab isActive={isActive} key={idx} onClick={() => handleTabClick(idx)}>
+      <Tab isActive={isactive} key={idx} onClick={() => handleTabClick(idx)}>
         <TabTitleContainer>
           <CircleContainer>
-            <ThreeLayersCircle baseColor={isActive ? 'transparent' : singleTab.baseColor} secondColor={singleTab.secondColor} />
+            <ThreeLayersCircle
+              baseColor={isactive ? "transparent" : singleTab.baseColor}
+              secondColor={singleTab.secondColor}
+            />
           </CircleContainer>
           <h4>{singleTab.title}</h4>
         </TabTitleContainer>
-        <Collapse isOpen={isActive} duration={300}>
+        <Collapse isOpen={isactive} duration={300}>
           <TabContent>
-            <div dangerouslySetInnerHTML={{ __html: singleTab.description }}></div>
+            <div
+              dangerouslySetInnerHTML={{ __html: singleTab.description }}
+            ></div>
           </TabContent>
         </Collapse>
       </Tab>
@@ -100,7 +111,7 @@ const GalleryWrapper = styled.div`
   align-items: center;
   margin-top: 4rem;
 
-  ${media('<=desktop')} {
+  ${media("<=desktop")} {
     flex-direction: column;
   }
 `;
@@ -120,7 +131,7 @@ const TabsContainer = styled.div`
     margin-top: 2rem;
   }
 
-  ${media('<=desktop')} {
+  ${media("<=desktop")} {
     margin-right: 0;
     margin-bottom: 4rem;
     width: 100%;
@@ -131,12 +142,12 @@ const ImageContainer = styled.div<{ isActive: boolean }>`
   position: relative;
   overflow: hidden;
   border-radius: 0.8rem;
-  flex: ${(p) => (p.isActive ? '2' : '0')};
+  flex: ${(p) => (p.isActive ? "2" : "0")};
   box-shadow: var(--shadow-md);
 
   &:before {
     display: block;
-    content: '';
+    content: "";
     width: 100%;
     padding-top: calc((9 / 16) * 100%);
   }
@@ -149,8 +160,8 @@ const ImageContainer = styled.div<{ isActive: boolean }>`
     left: 0;
   }
 
-  ${media('<=desktop')} {
-    width: ${(p) => (p.isActive ? '100%' : '0')};
+  ${media("<=desktop")} {
+    width: ${(p) => (p.isActive ? "100%" : "0")};
   }
 `;
 
@@ -168,7 +179,7 @@ const Tab = styled.div<{ isActive: boolean }>`
   font-size: 1.6rem;
   font-weight: bold;
 
-  ${media('<=desktop')} {
+  ${media("<=desktop")} {
     width: 100%;
   }
 `;
@@ -190,7 +201,7 @@ const TabContent = styled.div`
   font-size: 1.5rem;
   padding-left: calc(5rem + 1.5rem);
 
-  ${media('<=tablet')} {
+  ${media("<=tablet")} {
     padding-left: calc(4rem + 1.25rem);
   }
 
@@ -202,7 +213,7 @@ const TabContent = styled.div`
 const CircleContainer = styled.div`
   flex: 0 calc(5rem + 1.5rem);
 
-  ${media('<=tablet')} {
+  ${media("<=tablet")} {
     flex: 0 calc(4rem + 1.25rem);
   }
 `;

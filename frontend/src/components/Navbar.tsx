@@ -1,43 +1,54 @@
-"use client"
-import dynamic from 'next/dynamic'; 
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components'; 
-import { media } from '@/utils/media';
-import Button from './Button';
-import Container from './Container';
-import Drawer from './Drawer';
-import { HamburgerIcon } from './HamburgerIcon';
-import Logo from './Logo';
-import { useNewsletterModalContext } from '@/contexts/newsletter-modal.context';
-import { NavItems, SingleNavItem } from '../../types';
-import { ScrollPositionEffectProps, useScrollPosition } from '@/hooks/useScrollPosition'; 
-import { usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
+"use client";
+import dynamic from "next/dynamic";
+import React, { useRef, useState } from "react";
+import styled from "styled-components";
+import { media } from "@/utils/media";
+import Button from "./Button";
+import Container from "./Container";
+import Drawer from "./Drawer";
+import { HamburgerIcon } from "./HamburgerIcon";
+import Logo from "./Logo";
+import { useNewsletterModalContext } from "@/contexts/newsletter-modal.context";
+import { NavItems, SingleNavItem } from "../../types";
+import {
+  ScrollPositionEffectProps,
+  useScrollPosition,
+} from "@/hooks/useScrollPosition";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
-const ColorSwitcher = dynamic(() => import('../components/ColorSwitcher'), { ssr: false });
+const ColorSwitcher = dynamic(() => import("../components/ColorSwitcher"), {
+  ssr: false,
+});
 
 type NavbarProps = { items: NavItems };
-type ScrollingDirections = 'up' | 'down' | 'none';
+type ScrollingDirections = "up" | "down" | "none";
 type NavbarContainerProps = { hidden: boolean; transparent: boolean };
 
-export default function Navbar({ items }: NavbarProps) { 
+export default function Navbar({ items }: NavbarProps) {
   const routerPath = usePathname();
   const { toggle } = Drawer.useDrawer();
-  const [scrollingDirection, setScrollingDirection] = useState<ScrollingDirections>('none');
+  const [scrollingDirection, setScrollingDirection] =
+    useState<ScrollingDirections>("none");
 
   let lastScrollY = useRef(0);
-  const lastRoute = useRef('');
+  const lastRoute = useRef("");
   const stepSize = useRef(50);
 
-  useScrollPosition(scrollPositionCallback, [routerPath], undefined, undefined, 50);
+  useScrollPosition(
+    scrollPositionCallback,
+    [routerPath],
+    undefined,
+    undefined,
+    50
+  );
 
   function scrollPositionCallback({ currPos }: ScrollPositionEffectProps) {
-    
     const hasRouteChanged = routerPath !== lastRoute.current;
 
     if (hasRouteChanged) {
       lastRoute.current = routerPath;
-      setScrollingDirection('none');
+      setScrollingDirection("none");
       return;
     }
 
@@ -48,7 +59,7 @@ export default function Navbar({ items }: NavbarProps) {
     const isInNonCollapsibleArea = lastScrollY.current > -50;
 
     if (isInNonCollapsibleArea) {
-      setScrollingDirection('none');
+      setScrollingDirection("none");
       lastScrollY.current = currentScrollY;
       return;
     }
@@ -58,19 +69,19 @@ export default function Navbar({ items }: NavbarProps) {
       return;
     }
 
-    setScrollingDirection(isScrollingUp ? 'up' : 'down');
+    setScrollingDirection(isScrollingUp ? "up" : "down");
     lastScrollY.current = currentScrollY;
   }
 
-  const isNavbarHidden = scrollingDirection === 'down';
-  const isTransparent = scrollingDirection === 'none';
+  const isNavbarHidden = scrollingDirection === "down";
+  const isTransparent = scrollingDirection === "none";
 
   return (
     <NavbarContainer hidden={isNavbarHidden} transparent={isTransparent}>
       <Content>
         <LogoWrapper>
           <Link href="/">
-              <Logo />
+            <Logo />
           </Link>
         </LogoWrapper>
 
@@ -79,9 +90,9 @@ export default function Navbar({ items }: NavbarProps) {
             <NavItem key={singleItem.href} {...singleItem} />
           ))}
         </NavItemList>
-        {/* <ColorSwitcherContainer>
+        <ColorSwitcherContainer>
           <ColorSwitcher />
-        </ColorSwitcherContainer> */}
+        </ColorSwitcherContainer>
         <HamburgerMenuWrapper>
           <HamburgerIcon aria-label="Toggle menu" onClick={toggle} />
         </HamburgerMenuWrapper>
@@ -119,13 +130,13 @@ const NavItemList = styled.div`
   display: flex;
   list-style: none;
 
-  ${media('<desktop')} {
+  ${media("<desktop")} {
     display: none;
   }
 `;
 
 const HamburgerMenuWrapper = styled.div`
-  ${media('>=desktop')} {
+  ${media(">=desktop")} {
     display: none;
   }
 `;
@@ -139,20 +150,23 @@ const LogoWrapper = styled.a`
 `;
 
 const NavItemWrapper = styled.li<Partial<SingleNavItem>>`
-  background-color: ${(p) => (p.outlined ? 'rgb(var(--primary))' : 'transparent')};
+  background-color: ${(p) =>
+    p.outlined ? "rgb(var(--primary))" : "transparent"};
   border-radius: 0.5rem;
   font-size: 1.3rem;
   text-transform: uppercase;
   line-height: 2;
 
   &:hover {
-    background-color: ${(p) => (p.outlined ? 'rgb(var(--primary), 0.8)' : 'transparent')};
+    background-color: ${(p) =>
+      p.outlined ? "rgb(var(--primary), 0.8)" : "transparent"};
     transition: background-color 0.2s;
   }
 
   a {
     display: flex;
-    color: ${(p) => (p.outlined ? 'rgb(var(--textSecondary))' : 'rgb(var(--text), 0.75)')};
+    color: ${(p) =>
+      p.outlined ? "rgb(var(--textSecondary))" : "rgb(var(--text), 0.75)"};
     letter-spacing: 0.025em;
     text-decoration: none;
     padding: 0.75rem 1.5rem;
@@ -173,12 +187,16 @@ const NavbarContainer = styled.div<NavbarContainerProps>`
   height: 8rem;
   z-index: var(--z-navbar);
 
-  background-color: white;
+  background-color: rgb(var(--navbarBackground));
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
-  visibility: ${(p) => (p.hidden ? 'hidden' : 'visible')};
-  transform: ${(p) => (p.hidden ? `translateY(-8rem) translateZ(0) scale(1)` : 'translateY(0) translateZ(0) scale(1)')};
+  visibility: ${(p) => (p.hidden ? "hidden" : "visible")};
+  transform: ${(p) =>
+    p.hidden
+      ? `translateY(-8rem) translateZ(0) scale(1)`
+      : "translateY(0) translateZ(0) scale(1)"};
 
-  transition-property: transform, visibility, height, box-shadow, background-color;
+  transition-property: transform, visibility, height, box-shadow,
+    background-color;
   transition-duration: 0.15s;
   transition-timing-function: ease-in-out;
 `;

@@ -1,22 +1,28 @@
 "use client";
-  
-import { PropsWithChildren, useEffect, useRef } from 'react'
-import styled from 'styled-components' 
-import ClientOnly from './ClientOnly'
-import CloseIcon from './CloseIcon'
-import OriginalDrawer from './Drawer'
-import { NavItems } from '../../types'
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
-type NavigationDrawerProps = PropsWithChildren<{ items: NavItems }>
+import { PropsWithChildren, useEffect, useRef } from "react";
+import styled from "styled-components";
+import ClientOnly from "./ClientOnly";
+import CloseIcon from "./CloseIcon";
+import OriginalDrawer from "./Drawer";
+import { NavItems } from "../../types";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function NavigationDrawer({ children, items }: NavigationDrawerProps) {
+type NavigationDrawerProps = PropsWithChildren<{ items: NavItems }>;
+
+export default function NavigationDrawer({
+  children,
+  items,
+}: NavigationDrawerProps) {
   return (
     <OriginalDrawer.Drawer>
       <Wrapper>
         <ClientOnly>
-          <OriginalDrawer.Target openClass="drawer-opened" closedClass="drawer-closed">
+          <OriginalDrawer.Target
+            openClass="drawer-opened"
+            closedClass="drawer-closed"
+          >
             <div className="my-drawer">
               <div className="my-drawer-container">
                 <DrawerCloseButton />
@@ -28,21 +34,21 @@ export default function NavigationDrawer({ children, items }: NavigationDrawerPr
       </Wrapper>
       {children}
     </OriginalDrawer.Drawer>
-  )
+  );
 }
 
 function NavItemsList({ items }: NavigationDrawerProps) {
-  const { close } = OriginalDrawer.useDrawer()
-  const router = useRouter()
+  const { close } = OriginalDrawer.useDrawer();
+  const router = useRouter();
 
   useEffect(() => {
     function handleRouteChangeComplete() {
-      close()
+      close();
     }
 
     // router.events.on('routeChangeComplete', handleRouteChangeComplete)
     // return () => router.events.off('routeChangeComplete', handleRouteChangeComplete)
-  }, [close, router])
+  }, [close, router]);
 
   return (
     <ul>
@@ -51,17 +57,17 @@ function NavItemsList({ items }: NavigationDrawerProps) {
           <NavItem key={idx}>
             <Link href={singleItem.href}>{singleItem.title}</Link>
           </NavItem>
-        )
+        );
       })}
     </ul>
-  )
+  );
 }
 
 function DrawerCloseButton() {
-  const ref = useRef(null)
-  const a11yProps = OriginalDrawer.useA11yCloseButton(ref)
+  const ref = useRef(null);
+  const a11yProps = OriginalDrawer.useA11yCloseButton(ref);
 
-  return <CloseIcon className="close-icon" _ref={ref} {...a11yProps} />
+  return <CloseIcon className="close-icon" _ref={ref} {...a11yProps} />;
 }
 
 const Wrapper = styled.div`
@@ -69,7 +75,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     z-index: var(--z-drawer);
-    background: white;
+    background: rgb(var(--background));
     transition: margin-left 0.3s cubic-bezier(0.82, 0.085, 0.395, 0.895);
     overflow: hidden;
   }
@@ -110,7 +116,7 @@ const Wrapper = styled.div`
       margin-bottom: 3rem;
     }
   }
-`
+`;
 
 const NavItem = styled.li`
   a {
@@ -123,4 +129,4 @@ const NavItem = styled.li`
     padding: 0.5rem 1rem;
     text-align: center;
   }
-`
+`;
