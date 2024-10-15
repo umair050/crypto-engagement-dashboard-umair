@@ -3,15 +3,17 @@ import styled from 'styled-components';
 import { media } from '@/utils/media';
 import Button from './Button';
 import RichText from './RichText';
+import Link from 'next/link';
 
 interface PricingCardProps {
   title: string;
+  paymentUrl: string;
   description: string;
   benefits: string[];
   isOutlined?: boolean;
 }
 
-export default function PricingCard({ title, description, benefits, isOutlined, children }: PropsWithChildren<PricingCardProps>) {
+export default function PricingCard({ title, paymentUrl, description, benefits, isOutlined, children }: PropsWithChildren<PricingCardProps>) {
   const isAnyBenefitPresent = benefits?.length;
 
   return (
@@ -30,7 +32,9 @@ export default function PricingCard({ title, description, benefits, isOutlined, 
           </CustomRichText>
         )}
       </PriceContainer>
-      <CustomButton>Get started</CustomButton>
+      <Link href={paymentUrl}>
+        <CustomButton>Get started</CustomButton>
+      </Link>
     </Wrapper>
   );
 }

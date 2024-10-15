@@ -1,51 +1,109 @@
+// PricingTablesSection.tsx
 import React from 'react';
 import styled from 'styled-components';
 import AutofitGrid from '@/components/AutofitGrid';
 import PricingCard from '@/components/PricingCard';
 import SectionTitle from '@/components/SectionTitle';
 
-export default function PricingTablesSection() {
+interface PricingTablesSectionProps {
+  accessToken: string | null;
+}
+
+export default function PricingTablesSection({ accessToken }: PricingTablesSectionProps) {
+  // Function to get the cookie by name
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+    return null;
+  };
+
+  const getAccessToken = getCookie('access');
+
+
+
+  console.log('Access Token 123:', getAccessToken);
+  const pricingPlans = [
+    {
+      title: 'Professional Plan',
+      description: 'Give us a try for free',
+      benefits: ['1 seat', '1 active project', 'Unlimited viewers', '10 blocks'],
+      price: '$299.00',
+      isOutlined: false,
+      paymentUrl: 'https://buy.stripe.com/test_dR6cOc4vu1pt5xe7su?prefilled_email=malikumair112233%40gmail.com&client_reference_id=123'
+    },
+    {
+      title: 'Premium Plan',
+      description: 'Best for individual designers',
+      benefits: [
+        '1 seat',
+        '3 active projects',
+        'Unlimited viewers',
+        '100 blocks',
+        'CSV Downloader',
+        'Password protection',
+      ],
+      price: '$599.00',
+      isOutlined: true,
+      paymentUrl: 'https://buy.stripe.com/test_dR6cOc4vu1pt5xe7su?prefilled_email=malikumair112233%40gmail.com&client_reference_id=123'
+    },
+    {
+      title: 'Enterprise Plan',
+      description: 'Get your team together',
+      benefits: [
+        '10 seats',
+        '10 active projects',
+        'Unlimited viewers',
+        'Unlimited blocks',
+        'CSV Downloader',
+        'Password protection',
+        'Customization',
+      ],
+      price: '$999.00',
+      isOutlined: false,
+      paymentUrl: 'https://buy.stripe.com/test_dR6cOc4vu1pt5xe7su?prefilled_email=malikumair112233%40gmail.com&client_reference_id=123'
+    },
+  ];
   return (
     <Wrapper>
       <SectionTitle>Flexible pricing for agile teams</SectionTitle>
       <AutofitGrid>
-        <PricingCard
-          title="free"
-          description="Give us a try for free"
-          benefits={['1 seat', '1 active project', 'Ulimited viewers', '10 blocks']}
-        >
-          $0<span>/month</span>
-        </PricingCard>
-        <PricingCard
-          title="Starter"
-          description="Best for individual desginers"
-          benefits={['1 seat', '3 active project', 'Ulimited viewers', '100 blocks', 'CSV Downloader', 'Password protection']}
-          isOutlined
-        >
-          $29<span>/month</span>
-        </PricingCard>
-        <PricingCard
-          title="Premium"
-          description="Get your team together"
-          benefits={[
-            '10 seat',
-            '10 active project',
-            'Ulimited viewers',
-            'Unlimited blocks',
-            'CSV Downloader',
-            'Password protection',
-            'Customization',
-          ]}
-        >
-          $79<span>/month</span>
-        </PricingCard>
+        {pricingPlans.map((plan) => (
+          <PricingCard
+            key={plan.title}
+            title={plan.title}
+            paymentUrl={plan.paymentUrl}
+            description={plan.description}
+            benefits={plan.benefits}
+            isOutlined={plan.isOutlined}
+          >
+            {plan.price}
+            <span>/month</span>
+          </PricingCard>
+        ))}
       </AutofitGrid>
     </Wrapper>
   );
 }
+
+
 
 const Wrapper = styled.div`
   & > *:not(:first-child) {
     margin-top: 8rem;
   }
 `;
+
+// Fetching the cookies on the server-side
+export async function getServerSideProps(context: any) {
+  const { req } = context;
+  const accessToken = req.cookies.access || null; // Fetch access cookie from request
+
+  console.log("ACCESS_TOKEN_USER", req.cookies);
+  
+  return {
+    props: {
+      accessToken,
+    },
+  };
+}

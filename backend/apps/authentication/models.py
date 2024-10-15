@@ -12,7 +12,9 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.LargeBinary)
-
+    subscription_status = db.Column(db.String(20), nullable=False, default='inactive')
+    stripe_subscription_id = db.Column(db.String(100), nullable=True)
+    
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
             # depending on whether value is an iterable or not, we must
