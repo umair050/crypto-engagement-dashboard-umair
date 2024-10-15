@@ -5,11 +5,9 @@ import AutofitGrid from '@/components/AutofitGrid';
 import PricingCard from '@/components/PricingCard';
 import SectionTitle from '@/components/SectionTitle';
 
-interface PricingTablesSectionProps {
-  accessToken: string | null;
-}
 
-export default function PricingTablesSection({ accessToken }: PricingTablesSectionProps) {
+
+export default function PricingTablesSection() {
   // Function to get the cookie by name
   const getCookie = (name: string) => {
     const value = `; ${document.cookie}`;
