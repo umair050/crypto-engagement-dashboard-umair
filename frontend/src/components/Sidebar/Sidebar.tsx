@@ -6,8 +6,8 @@ const Sidebar: React.FC<{ active: number }> = ({ active }) => {
     <aside className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
       <div className="sidenav-header">
         <i className="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-        <a className="navbar-brand m-0" href="/">
-          <img src="./img/logo-ct-dark.png" className="navbar-brand-img h-100" alt="main_logo" />
+        <a className="navbar-brand m-0" href="/dashboard">
+          <img src="/img/logo-ct-dark.png" className="navbar-brand-img h-100" alt="main_logo" />
           <span className="ms-1 font-weight-bold">Crypto Dashboard</span>
         </a>
       </div>
@@ -15,7 +15,7 @@ const Sidebar: React.FC<{ active: number }> = ({ active }) => {
       <div className="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className={`nav-link ${active === 0 ? "active" : ""}`} href="/analysis">
+            <a className={`nav-link ${active === 0 ? "active" : ""}`} href="/dashboard/analysis">
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                   <title>shop </title>
@@ -37,7 +37,7 @@ const Sidebar: React.FC<{ active: number }> = ({ active }) => {
 
 
           <li className="nav-item">
-            <a className={`nav-link ${active === 1 ? "active" : ""}`} href="/charts
+            <a className={`nav-link ${active === 1 ? "active" : ""}`} href="/dashboard/charts
 ">
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">

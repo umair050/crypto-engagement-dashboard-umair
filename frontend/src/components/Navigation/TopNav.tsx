@@ -36,10 +36,10 @@ const TopNav: React.FC<{ active: number }> = ({ active }) => {
           </div>
 
           <ul className="navbar-nav  justify-content-end ">
-            <li className="nav-item d-flex align-items-center " id="log-out">
+            <li className="nav-item d-flex align-items-center cursor-pointer " id="log-out">
               <a onClick={async () => {
                 await logout()
-                push("/login")
+                push("/dashboard/login")
                 toast.success("Logged out.")
               }} className="nav-link text-body font-weight-bold px-0">
                 <i className="fa fa-user me-sm-1"></i>

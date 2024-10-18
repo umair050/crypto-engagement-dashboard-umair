@@ -4,6 +4,7 @@ import Image from "next/image";
 import axios from "axios";
 import { BarChart, LineChart } from "@/components/charts/Chart";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 export default async function Home() {
   const access = cookies().get("access")
@@ -26,13 +27,14 @@ export default async function Home() {
         <div className="chart-cont">
           {res_table && res_table.data.coin_data.map((item: any, idx: number) => (
             <>
-
-              <div key={idx}>
-                <div style={{}}>
-                  {item.coin}
-                </div>
-                <BarChart coinData={item} />
-              </div>
+              <Link key={idx} href={`/coins-details/${item.coin}`}>
+                    <div>
+                      <div style={{}}>
+                        {item.coin}
+                      </div>
+                      <BarChart coinData={item} />
+                    </div>
+              </Link>
             </>
           ))}
         </div>

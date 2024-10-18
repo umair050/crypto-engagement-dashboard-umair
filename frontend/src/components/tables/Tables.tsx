@@ -17,8 +17,13 @@ interface TableProps {
 }
 
 const Tables: React.FC<TableProps> = ({ tableProps }) => {
+
+const Tables: React.FC<TableProps> = ({ tableProps }) => {
   return (
-    <table className={styles.table}>
+     <div>
+         {tableProps && 
+
+     <table className={styles.table}>
       <thead>
         <tr>
           <th className={styles.header}>Tweet ID</th>
@@ -45,6 +50,8 @@ const Tables: React.FC<TableProps> = ({ tableProps }) => {
         ))}
       </tbody>
     </table>
+}
+        </div>
   );
 };
 

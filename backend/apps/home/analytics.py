@@ -10,41 +10,26 @@ def alpha_calculation(interactions) -> pd.Series:
     N = n.sum().sum()
     n_c = interactions.groupby(COIN)[INTERACTIONS].sum().sum(axis=1)
     v_c = interactions.groupby(COIN).apply(lambda x: x[['num_tweets']].T.dot(x.followers_count)).num_tweets
-    return ((N/ L1) * n_c.div(v_c)).sort_values()
+   
+    # Handle divide by zero by replacing zero values with NaN
+    L1 = L1 if L1 != 0 else 1
+    v_c = v_c.replace(0, 1)  # Replace zeros in v_c with 1
+    # Calculate engagement coefficient, handling potential NaN values
+    result_series = (N / L1) * n_c.div(v_c)
 
-def fetch_alphas():
-    interactions = pd.read_parquet(INTERACTIONS_PATH)
-    print('interactions',interactions)
+    # Sort values and return the first valid result
+    result_series = result_series.sort_values()
+
+    # Return the top value, or NaN if the Series is empty
+    return result_series.iloc[0] if not result_series.empty else float('nan')
+
+
+def fetch_alphas(engagement_data_list):
+    # interactions = pd.read_parquet(INTERACTIONS_PATH)
+    print(engagement_data_list)
+    interactions = pd.DataFrame(engagement_data_list)
     return alpha_calculation(interactions=interactions)
 
-
-
-
-def create_dummy_data():
-    # Define the number of rows for the dummy data
-    num_rows = 10
-
-    # Create dummy data
-    data = {
-        'coin': np.random.choice(['btc', 'eth', 'xrp','sol'], size=num_rows),
-        'like_count': np.random.randint(0, 1000, size=num_rows),
-        'reply_count': np.random.randint(0, 500, size=num_rows),
-        'retweet_count': np.random.randint(0, 300, size=num_rows),
-        'num_tweets': np.random.randint(1, 1000, size=num_rows),  # Add num_tweets column
-        'followers_count': np.random.randint(100, 5000, size=num_rows),  # Add this column
-
-    }
-
-    # Create a DataFrame
-    df = pd.DataFrame(data)
-
-    # Display the first few rows of the DataFrame
-    print(df.head())
-
-    # Save the DataFrame to a Parquet file with gzip compression
-    df.to_parquet(INTERACTIONS_PATH, compression='gzip')
-
-    return 'dummy data created'
 
 
 

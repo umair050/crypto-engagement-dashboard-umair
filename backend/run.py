@@ -35,7 +35,8 @@ scheduler.start()
 #@scheduler.task('interval', id='do_job_1', seconds=30, misfire_grace_time=900)
 def job1():
     with scheduler.app.app_context():
-        discover_new_coins()
+        # discover_new_coins()
+        get_new_listings() 
 
 scheduler.add_job(id='job1', func=job1, trigger='interval', seconds=7200)#, next_run_time=datetime.datetime.now()+datetime.timedelta(seconds=10))
 

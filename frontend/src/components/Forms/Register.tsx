@@ -19,7 +19,7 @@ const Register = () => {
 
     if (res.success) {
       toast.success("Register Successfull. Please Login.")
-      push("/login")
+      push("/dashboard/login")
     } 
     else {
       toast.error("Registraition Faild, Try Again")
@@ -55,7 +55,7 @@ const Register = () => {
       </div>
 
       <div className="text-center">
-        <a href="/login" className="btn bg-gradient-secondary w-100 mt-4 mb-0">Sign IN</a>
+        <a href="/dashboard/login" className="btn bg-gradient-secondary w-100 mt-4 mb-0">Sign IN</a>
       </div>
     </form>
   );

@@ -11,14 +11,14 @@ const Nav = () => {
         <ul className="navbar-nav mx-auto ms-xl-auto">
 
           <li className="nav-item">
-            <a className="nav-link me-2" href="/register">
+            <a className="nav-link me-2" href="/dashboard/register">
               <i className="fas fa-user-circle opacity-6 me-1"></i>
               Sign Up
             </a>
           </li>
 
           <li className="nav-item">
-            <a className="nav-link me-2" href="/login">
+            <a className="nav-link me-2" href="/dashboard/login">
               <i className="fas fa-key opacity-6 me-1"></i>
               Sign In
             </a>
