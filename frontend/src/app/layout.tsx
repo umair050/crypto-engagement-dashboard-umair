@@ -3,7 +3,9 @@
 import "swiper/css";
 import "swiper/css/bundle";
 import "swiper/css/navigation";
-import "swiper/css/autoplay"; 
+import "swiper/css/autoplay";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import dynamic from "next/dynamic";
 import { ColorModeScript } from "nextjs-color-mode";
 import React, { Component, PropsWithChildren, Suspense } from "react";
@@ -20,8 +22,8 @@ import {
 import { NavItems } from "../../types";
 import { usePathname } from "next/navigation";
 import LoadingPage from "./LoadingPage";
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js'
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 const navItems: NavItems = [
   { title: "Awesome SaaS Features", href: "/features" },
@@ -29,16 +31,16 @@ const navItems: NavItems = [
   { title: "Contact", href: "/contact" },
   { title: "Sign up", href: "/dashboard/register" },
 ];
- 
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const pathname = usePathname();
-  const stripePromise = loadStripe('pk_test_wmJkgiQjKKc3O3ZaKJIOIXEF00bPBkNhdy');
+  const stripePromise = loadStripe(
+    "pk_test_wmJkgiQjKKc3O3ZaKJIOIXEF00bPBkNhdy"
+  );
 
   return (
     <>
@@ -46,31 +48,27 @@ export default function RootLayout({
         <body>
           {/* Check if pathname contains dashboard/ */}
           {!pathname.includes("dashboard") && (
-          <>
-          <ColorModeScript />
-          <GlobalStyle />
+            <>
+              <ColorModeScript />
+              <GlobalStyle />
 
-          <Providers>
-          <Elements stripe={stripePromise}>
-            <Suspense fallback={<LoadingPage />}>
-            <Modals />
-            <Navbar items={navItems} />
-            <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-              {children}
-            </main>
-            <WaveCta />
-            <Footer />
-            </Suspense>
-            </Elements>
-          </Providers>
-          </>
+              <Providers>
+                <Elements stripe={stripePromise}>
+                  <Suspense fallback={<LoadingPage />}>
+                    <Modals />
+                    <Navbar items={navItems} />
+                    <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+                      {children}
+                    </main>
+                    <WaveCta />
+                    <Footer />
+                  </Suspense>
+                </Elements>
+              </Providers>
+            </>
           )}
 
-        {pathname.includes("dashboard") && (
-          <>
-            {children}
-          </>
-        )}
+          {pathname.includes("dashboard") && <>{children}</>}
         </body>
       </html>
     </>
