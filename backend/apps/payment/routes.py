@@ -9,6 +9,7 @@ from apps.home.models import User
 
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 endpoint_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
+webapp_url = os.getenv('WEB_APP_URL')
 
 blueprint = Blueprint('payment', __name__)
 
@@ -101,8 +102,9 @@ def create_checkout_session():
                 'quantity': 1,
             }],
             customer=user.stripe_customer_id,  # Assuming the user has a Stripe customer ID
-            success_url='http://localhost:4038/payment/success',
-            cancel_url='http://localhost:4038/payment/cancel',
+            # Redirect URLs
+            success_url=os.getenv('WEB_APP_URL') + '/payment/success',
+            cancel_url=os.getenv('WEB_APP_URL') + '/payment/cancel',
         )
 
         return jsonify({'id': session.id})

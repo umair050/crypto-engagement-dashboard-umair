@@ -235,12 +235,45 @@ def get_auth_user():
     
     # Query the user by their ID
     user = User.query.get(user_id)
+    subscription_data = None
+
+    if user:
+        # Check if the user has a Stripe customer ID and subscription ID
+        if user.stripe_customer_id and user.stripe_subscription_id:
+            try:
+                # Fetch the subscription details from Stripe
+                subscriptions = stripe.Subscription.list(customer=user.stripe_customer_id, limit=1, status='active')
+                if subscriptions.data:
+                    latest_subscription = subscriptions.data[0]  # Get the latest subscription
+
+                    # Get the product ID from the subscription's line items
+                    subscription_item = latest_subscription['items']['data'][0]  # Assuming there is at least one item
+                    price_id = subscription_item['price']['id']
+                    product_id = subscription_item['price']['product']
+
+                    # Fetch the product details using the product ID
+                    product = stripe.Product.retrieve(product_id)
+
+                    # Extract relevant subscription data
+                    subscription_data = {
+                        "id": latest_subscription.id,
+                        "status": latest_subscription.status,
+                        "plan": {
+                            "price_id": price_id,
+                            "product_name": product.name,  # Get the product name
+                        },
+                        "current_period_start": latest_subscription.current_period_start,
+                        "current_period_end": latest_subscription.current_period_end,
+                    }
+            except Exception as e:
+                print(f"Error fetching subscription details: {str(e)}")
     
     # If the user exists, return their details
     if user:
         return jsonify({
             "message": "User details fetched successfully.",
-            "user": user.serialize()  # Assuming the User model has a `serialize` method
+            "user": user.serialize() ,
+            "subscription": subscription_data 
         })
     else:
         return jsonify({"message": "User not found."}), 404

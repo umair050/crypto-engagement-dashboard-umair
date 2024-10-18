@@ -17,50 +17,53 @@ export default function PricingTablesSection() {
     return null;
   };
 
-  // const getAccessToken = getCookie('access');
 
-
+  const PREMIUM_PLAN_ID = process.env.NEXT_PREMIUM_PLAN_ID;
+  const ENTERPRISE_PLAN_ID = process.env.NEXT_ENTERPRISE_PLAN_ID;
+  const PROFESSIONAL_PLAN_ID = process.env.NEXT_PROFESSIONAL_PLAN_ID;
+  
 
   // console.log('Access Token 123:', getAccessToken);
   const pricingPlans = [
     {
       title: 'Professional Plan',
       description: 'Give us a try for free',
-      benefits: ['1 seat', '1 active project', 'Unlimited viewers', '10 blocks'],
+      benefits: [
+        'Core data sets',
+        'Sentiment analysis',
+        'Real-time alerts',
+        'Customizable dashboard'
+        
+      ],
       price: '$299.00',
       isOutlined: false,
-      priceId:"price_1Q8znLLtIWiOvjKvjvu9JxxY"
+      priceId:PROFESSIONAL_PLAN_ID || ''
     },
     {
       title: 'Premium Plan',
       description: 'Best for individual designers',
       benefits: [
-        '1 seat',
-        '3 active projects',
-        'Unlimited viewers',
-        '100 blocks',
-        'CSV Downloader',
-        'Password protection',
+        'Premium data sets',
+        'Advanced analytics',
+        'Predictive modeling',
+        'API integration'
       ],
       price: '$599.00',
       isOutlined: true,
-      priceId:"price_1Q8znrLtIWiOvjKvIwWqxpbc"
+      priceId:PREMIUM_PLAN_ID || ''
     },
     {
       title: 'Enterprise Plan',
       description: 'Get your team together',
       benefits: [
-        '10 seats',
-        '10 active projects',
-        'Unlimited viewers',
-        'Unlimited blocks',
-        'CSV Downloader',
-        'Password protection',
-        'Customization',
+        'Unlimited data access',
+        'Bespoke solutions',
+        'Premium support & deployment',
+        'Tailored onboarding'
       ],
       price: '$999.00',
       isOutlined: false,
-      priceId:"price_1Q8zoaLtIWiOvjKvHSdBdow7"
+      priceId:ENTERPRISE_PLAN_ID || ''
     },
   ];
   return (
