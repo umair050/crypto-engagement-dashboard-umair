@@ -4,16 +4,17 @@ import { media } from '@/utils/media';
 import Button from './Button';
 import RichText from './RichText';
 import Link from 'next/link';
+import SubscriptionForm from '@/app/pricing/SubscriptionForm';
 
 interface PricingCardProps {
-  title: string;
-  paymentUrl: string;
+  title: string; 
   description: string;
   benefits: string[];
   isOutlined?: boolean;
+  priceId: string;
 }
 
-export default function PricingCard({ title, paymentUrl, description, benefits, isOutlined, children }: PropsWithChildren<PricingCardProps>) {
+export default function PricingCard({ title,priceId, description, benefits, isOutlined, children }: PropsWithChildren<PricingCardProps>) {
   const isAnyBenefitPresent = benefits?.length;
 
   return (
@@ -32,9 +33,10 @@ export default function PricingCard({ title, paymentUrl, description, benefits, 
           </CustomRichText>
         )}
       </PriceContainer>
-      <Link href={paymentUrl}>
+      {/* <Link href={paymentUrl}>
         <CustomButton>Get started</CustomButton>
-      </Link>
+      </Link> */}
+      <SubscriptionForm priceId={priceId} />
     </Wrapper>
   );
 }

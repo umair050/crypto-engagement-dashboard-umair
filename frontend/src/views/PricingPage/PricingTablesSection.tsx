@@ -1,3 +1,4 @@
+"use client";
 // PricingTablesSection.tsx
 import React from 'react';
 import styled from 'styled-components';
@@ -16,11 +17,11 @@ export default function PricingTablesSection() {
     return null;
   };
 
-  const getAccessToken = getCookie('access');
+  // const getAccessToken = getCookie('access');
 
 
 
-  console.log('Access Token 123:', getAccessToken);
+  // console.log('Access Token 123:', getAccessToken);
   const pricingPlans = [
     {
       title: 'Professional Plan',
@@ -28,7 +29,7 @@ export default function PricingTablesSection() {
       benefits: ['1 seat', '1 active project', 'Unlimited viewers', '10 blocks'],
       price: '$299.00',
       isOutlined: false,
-      paymentUrl: 'https://buy.stripe.com/test_dR6cOc4vu1pt5xe7su?prefilled_email=malikumair112233%40gmail.com&client_reference_id=123'
+      priceId:"price_1Q8znLLtIWiOvjKvjvu9JxxY"
     },
     {
       title: 'Premium Plan',
@@ -43,7 +44,7 @@ export default function PricingTablesSection() {
       ],
       price: '$599.00',
       isOutlined: true,
-      paymentUrl: 'https://buy.stripe.com/test_dR6cOc4vu1pt5xe7su?prefilled_email=malikumair112233%40gmail.com&client_reference_id=123'
+      priceId:"price_1Q8znrLtIWiOvjKvIwWqxpbc"
     },
     {
       title: 'Enterprise Plan',
@@ -59,7 +60,7 @@ export default function PricingTablesSection() {
       ],
       price: '$999.00',
       isOutlined: false,
-      paymentUrl: 'https://buy.stripe.com/test_dR6cOc4vu1pt5xe7su?prefilled_email=malikumair112233%40gmail.com&client_reference_id=123'
+      priceId:"price_1Q8zoaLtIWiOvjKvHSdBdow7"
     },
   ];
   return (
@@ -69,11 +70,11 @@ export default function PricingTablesSection() {
         {pricingPlans.map((plan) => (
           <PricingCard
             key={plan.title}
-            title={plan.title}
-            paymentUrl={plan.paymentUrl}
+            title={plan.title} 
             description={plan.description}
             benefits={plan.benefits}
             isOutlined={plan.isOutlined}
+            priceId={plan.priceId}
           >
             {plan.price}
             <span>/month</span>

@@ -27,7 +27,7 @@ const Login = () => {
 
     if(res.user && res.user.subscription_status =="inactive"){
       // toast.error("Your account is currently inactive. Please contact support.")
-      return push("/dashboard/pricing")
+      return push("/pricing")
 
     }
     

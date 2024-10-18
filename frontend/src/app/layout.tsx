@@ -20,6 +20,8 @@ import {
 import { NavItems } from "../../types";
 import { usePathname } from "next/navigation";
 import LoadingPage from "./LoadingPage";
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js'
 
 const navItems: NavItems = [
   { title: "Awesome SaaS Features", href: "/features" },
@@ -36,6 +38,8 @@ export default function RootLayout({
 }>) {
 
   const pathname = usePathname();
+  const stripePromise = loadStripe('pk_test_wmJkgiQjKKc3O3ZaKJIOIXEF00bPBkNhdy');
+
   return (
     <>
       <html>
@@ -47,6 +51,7 @@ export default function RootLayout({
           <GlobalStyle />
 
           <Providers>
+          <Elements stripe={stripePromise}>
             <Suspense fallback={<LoadingPage />}>
             <Modals />
             <Navbar items={navItems} />
@@ -56,6 +61,7 @@ export default function RootLayout({
             <WaveCta />
             <Footer />
             </Suspense>
+            </Elements>
           </Providers>
           </>
           )}

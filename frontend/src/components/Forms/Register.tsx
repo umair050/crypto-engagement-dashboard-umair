@@ -19,7 +19,7 @@ const Register = () => {
 
     if (res.success) {
       toast.success("Register Successfull. Please Login.")
-      push("/login")
+      push("/dashboard/login")
     } 
     else {
       toast.error("Registraition Faild, Try Again")

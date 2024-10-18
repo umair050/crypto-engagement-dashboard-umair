@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
         // Check subscription status
         if (user.subscription_status === 'inactive') {
             // Redirect to pricing page if the account is inactive
-            return NextResponse.redirect(new URL('/dashboard/pricing', req.url));
+            return NextResponse.redirect(new URL('/pricing', req.url));
         }
 
         // Allow the request to continue to the requested page

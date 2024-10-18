@@ -7,6 +7,11 @@ from flask_jwt_extended import JWTManager as JWT, jwt_required, get_jwt_identity
 from .models import User
 from apps import db, bcrypt
 from .analytics import fetch_alphas
+import stripe
+
+
+# Set your Stripe API key
+stripe.api_key = os.getenv('STRIPE_API_KEY')
 
 @blueprint.route('/index', methods=['GET'])
 @jwt_required()
@@ -17,27 +22,45 @@ def index():
 
 # Can only register once. Change MAX_NUM_USERS if you want more. It is best to disable this api after you have your database set up
 @blueprint.route('/register', methods=['POST'])
-def register():
-    #users_count = User.query.count()
-    #if users_count >= MAX_NUM_USERS:
-    #    return jsonify({'message': 'Registeration stopped'}), 401
-    
+def register(): 
+
+       # Extract the username and password from the request
     username = request.json.get('username', None)
+    email = request.json.get('email', None)
     password = request.json.get('password', None)
 
+    # Validate input
     if not username or not password:
         return jsonify({'message': 'Missing username or password'}), 400
 
+    # Hash the password
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
+    # Create the new user in the database
     new_user = User(username=username, password=hashed_password)
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({'message': 'Registeration sucessful'}), 200
 
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({'message': 'Registeration sucessful'}), 200
+    try:
+        # Create a Stripe customer when the user signs up
+        stripe_customer = stripe.Customer.create(
+            # email=email,  # Assuming email is an email, if not, you can add a separate email field
+            name=username,  # Assuming email is an email, if not, you can add a separate email field
+            description=f"Customer for {email}"
+        )
+
+        print("Customer", stripe_customer)
+        # Store the Stripe customer ID in the user model
+        new_user.stripe_customer_id = stripe_customer['id']  # Ensure your User model has a stripe_customer_id field
+
+        # Add the new user to the database and commit
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify({'message': 'Registration successful'}), 200
+
+    except Exception as e:
+        # If an error occurs, rollback the session and return an error
+        db.session.rollback()
+        return jsonify({'message': f'Error: {str(e)}'}), 500
 
 @blueprint.route('/login', methods=['POST'])
 def login():
@@ -204,3 +227,20 @@ def get_coin_details(coin_symbol):
         return jsonify({'error': 'No data found for the specified coin.'}), 404
         
    
+@blueprint.route('/me', methods=['GET'])
+@jwt_required()  # Protect this route, allowing only authenticated users
+def get_auth_user():
+    # Get the user ID from the token
+    user_id = get_jwt_identity()
+    
+    # Query the user by their ID
+    user = User.query.get(user_id)
+    
+    # If the user exists, return their details
+    if user:
+        return jsonify({
+            "message": "User details fetched successfully.",
+            "user": user.serialize()  # Assuming the User model has a `serialize` method
+        })
+    else:
+        return jsonify({"message": "User not found."}), 404

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parse } from 'cookie';
+import { cookies } from 'next/headers';
 
 export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('access');
@@ -21,8 +22,7 @@ export function middleware(request: NextRequest) {
     const cookies = parse(request.headers.get('cookie') || '');
 
     console.log("cookies", cookies.user);
-    console.log(cookies.user);
-    
+    console.log(cookies.user); 
     // const accessToken = cookies.access; // Retrieve access token from cookies
     const user = cookies.user ? JSON.parse(cookies.user) : null; // Parse user data from cookies
      // Check subscription status

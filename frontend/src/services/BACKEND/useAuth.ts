@@ -8,7 +8,7 @@ export const login = async ({ username, password }: { username: string, password
     let response;
     try {
         response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}` + "/login", { username, password })
-        console.log(response.data);
+        console.log("LOGIN DATA",response.data);
         
 
         if (response.status === 200) {
@@ -54,6 +54,73 @@ export const register = async ({ username, password }: { username: string, passw
 
 }
 
+
+export const subscription = async ( priceId : string ) => { 
+    console.log("PRICE ID: " + priceId);
+    const access = cookies().get("access")
+    console.log("Access Line no 61", access);
+    
+    try {
+        // Make POST request with headers
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND}create-checkout-session`,
+            { priceId },  // Request body
+            {
+                headers: {
+                    "Authorization": `Bearer ${access?.value}`  // Authorization header
+                }
+            }
+        );
+    
+        if (response.status === 200) {
+            console.log("response", 
+                response.data
+            );
+            
+            return { success: true, id: response.data.id };
+        } else {
+            return { success: false, user: null }
+        }
+    
+    } catch (e: any) {
+        console.error(e);  // Log the error for debugging
+    
+        return {
+            success: false,
+        };
+    }
+
+
+}
+
+
+export const getAuthUser = async ( ) => { 
+    const access = cookies().get("access")
+    try {
+        // Make POST request with headers
+        const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_BACKEND}me`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${access?.value}`  // Authorization header
+                }
+            }
+        );
+    
+        console.log("RES", response.data);
+        cookies().set("user", JSON.stringify(response.data.user), { maxAge: 3600 * 24 * 2 })
+        return response.data;
+    
+    } catch (e: any) {
+        console.error(e);  // Log the error for debugging
+    
+        return {
+            success: false,
+        };
+    }
+
+
+}
 
 export const logout = async () => {
     cookies().delete("access")
