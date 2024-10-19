@@ -4,6 +4,8 @@ import "swiper/css";
 import "swiper/css/bundle";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import dynamic from "next/dynamic";
 import { ColorModeScript } from "nextjs-color-mode";
 import React, {
