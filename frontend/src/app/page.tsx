@@ -1,19 +1,16 @@
 "use client"
 
-import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import styled from 'styled-components'; 
 import BasicSection from '@/components/BasicSection';
 import Testimonials from '@/views/HomePage/Testimonials';
-import ScrollableBlogPosts from '@/views/HomePage/ScrollableBlogPosts';
 import Hero from '@/views/HomePage/Hero'; 
 import Partners from '@/views/HomePage/Partners'; 
 import { EnvVars } from '../../env';
 import Cta from '@/views/HomePage/Cta';
 import FeaturesGallery from '@/views/HomePage/FeaturesGallery';
 import Features from '@/views/HomePage/Features';
-import { getAllPosts } from '@/utils/postsFetcher';
-import Link from 'next/link';
+import CustomLink from '@/components/CustomLink';
 
 export default function Homepage() {
   return (
@@ -33,9 +30,9 @@ export default function Homepage() {
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, quidem error incidunt a doloremque voluptatem porro inventore
               voluptate quo deleniti animi laboriosam.{' '}
-              <Link href="/help-center">Possimus ullam velit rem itaque consectetur, in distinctio?</Link> Lorem ipsum, dolor sit amet
+              <CustomLink href="/help-center">Possimus ullam velit rem itaque consectetur, in distinctio?</CustomLink> Lorem ipsum, dolor sit amet
               consectetur adipisicing elit. Soluta repellendus quia quos obcaecati nihil. Laudantium non accusantium, voluptate eum nesciunt
-              at suscipit quis est soluta?
+              at suscipit quis est soluta?Test
             </p>
           </BasicSection>
           <BasicSection imageUrl="/demo-illustration-2.svg" title="Lorem ipsum dolor sit." overTitle="lorem ipsum" reversed>

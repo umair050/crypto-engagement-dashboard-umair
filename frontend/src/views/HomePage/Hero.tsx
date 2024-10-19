@@ -29,7 +29,7 @@ export default function Hero() {
           <Button onClick={() => setIsModalOpened(true)}>
             Subscribe to the newsletter <span>&rarr;</span>
           </Button>
-          <Link href="#whitepaper" passHref>
+          <Link href="#whitepaper">
             <Button transparent>
               Features <span>&rarr;</span>
             </Button>

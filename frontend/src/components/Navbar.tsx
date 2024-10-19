@@ -141,7 +141,7 @@ const HamburgerMenuWrapper = styled.div`
   }
 `;
 
-const LogoWrapper = styled.a`
+const LogoWrapper = styled.div`
   display: flex;
   margin-right: auto;
   text-decoration: none;

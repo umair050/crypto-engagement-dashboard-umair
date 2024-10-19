@@ -3,6 +3,10 @@
 @import "../styles/css/nucleo-svg.css";
 @import "../styles/css/soft-ui-dashboard.css";
 
+a{
+  text-decoration: none;
+}
+
 .chart-cont {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -18,9 +18,9 @@ export default function PricingTablesSection() {
   };
 
 
-  const PREMIUM_PLAN_ID = process.env.NEXT_PREMIUM_PLAN_ID;
-  const ENTERPRISE_PLAN_ID = process.env.NEXT_ENTERPRISE_PLAN_ID;
-  const PROFESSIONAL_PLAN_ID = process.env.NEXT_PROFESSIONAL_PLAN_ID;
+  const PREMIUM_PLAN_ID = process.env.NEXT_PUBLIC_PREMIUM_PLAN_ID;
+  const ENTERPRISE_PLAN_ID = process.env.NEXT_PUBLIC_ENTERPRISE_PLAN_ID;
+  const PROFESSIONAL_PLAN_ID = process.env.NEXT_PUBLIC_PROFESSIONAL_PLAN_ID;
   
 
   // console.log('Access Token 123:', getAccessToken);
@@ -66,6 +66,9 @@ export default function PricingTablesSection() {
       priceId:ENTERPRISE_PLAN_ID || ''
     },
   ];
+
+  console.log(pricingPlans);
+  
   return (
     <Wrapper>
       <SectionTitle>Flexible pricing for agile teams</SectionTitle>

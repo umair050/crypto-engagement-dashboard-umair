@@ -33,10 +33,10 @@ export default function PricingCard({ title,priceId, description, benefits, isOu
           </CustomRichText>
         )}
       </PriceContainer>
-      {/* <Link href={paymentUrl}>
-        <CustomButton>Get started</CustomButton>
-      </Link> */}
-      <SubscriptionForm priceId={priceId} />
+      {/* <Link href={"#"}> */}
+        <SubscriptionForm priceId={priceId} />
+      {/* </Link> */}
+      
     </Wrapper>
   );
 }
@@ -99,6 +99,4 @@ const CustomRichText = styled(RichText)`
   }
 `;
 
-const CustomButton = styled(Button)`
-  width: 100%;
-`;
+

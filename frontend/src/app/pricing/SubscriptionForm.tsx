@@ -3,8 +3,12 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { subscription } from '@/services/BACKEND/useAuth';
+import { styled } from 'styled-components';
+import Button from '@/components/Button';
 
-const stripePromise = loadStripe('pk_test_wmJkgiQjKKc3O3ZaKJIOIXEF00bPBkNhdy');
+const NEXT_PUBLIC_STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
+
+const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "");
 
 export interface CheckoutFormProps {
   priceId: string;
@@ -40,7 +44,7 @@ const CheckoutForm= ({priceId}:CheckoutFormProps ) => {
       setTimeout(() => {
         setError(null)
         // redirect to
-        window.location.href = '/dashboard/login';
+        // window.location.href = '/dashboard/login';
         
       }, 3000);
     } finally {
@@ -50,12 +54,17 @@ const CheckoutForm= ({priceId}:CheckoutFormProps ) => {
 
   return (
     <div>
-      <button disabled={loading} onClick={handleClick}>
+      <CustomButton disabled={loading} onClick={handleClick}>
         {loading ? 'Loading...' : 'Subscribe'}
-      </button>
-      {error && <div>{error}</div>}
+      </CustomButton>
+      {error && <div style={{marginTop:"10px", color:"red"}}>{error}</div>}
     </div>
   );
 };
+
+
+const CustomButton = styled(Button)`
+  width: 100%;
+`;
 
 export default CheckoutForm;
