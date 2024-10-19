@@ -2,6 +2,7 @@
 import { getAuthUser } from "@/services/BACKEND/useAuth";
 import { useEffect } from "react";
 import "../payment.css";
+import Link from "next/link";
 
 export default function PaymentSuccessPage() {
   useEffect(() => {
@@ -23,10 +24,14 @@ export default function PaymentSuccessPage() {
       <div className="message-box _success">
         <i className="fa fa-check-circle" aria-hidden="true"></i>
         <h2>Your payment was successful</h2>
-        <p>
-          Thank you for your payment. We will <br />
-          be in contact with more details shortly.
+        <p style={{marginBottom:"20px"}}>
+          Thank you for your payment.
         </p>
+
+        {/* Redirect to dashboard */}
+        <Link href="/dashboard" className="btn btn-primary">
+          Go to Dashboard
+        </Link>
       </div>
     </div>
   );

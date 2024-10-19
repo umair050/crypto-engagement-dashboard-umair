@@ -2,6 +2,7 @@
 import { getAuthUser } from "@/services/BACKEND/useAuth";
 import { useEffect } from "react";
 import "../payment.css";
+import Link from "next/link";
 
 export default function PaymentCancelPage() {
   useEffect(() => {
@@ -23,7 +24,12 @@ export default function PaymentCancelPage() {
       <div className="message-box _success _failed">
         <i className="fa fa-times-circle" aria-hidden="true"></i>
         <h2>Your payment failed</h2>
-        <p>Try again later</p>
+        <p style={{marginBottom:"20px"}}>Try again later</p>
+
+        {/* Redirect to dashboard */}
+        <Link href="/pricing" className="btn btn-primary">
+          Go to Pricing
+        </Link>
       </div>
     </div>
   );

@@ -74,7 +74,9 @@ const ContentContainer = styled.div`
 `;
 
 type Props = Pick<BasicSectionProps, 'reversed'>;
-const BasicSectionWrapper = styled(Container)`
+const BasicSectionWrapper = styled(Container).attrs<Props>(({ reversed }) => ({
+  reversed,
+}))`
   display: flex;
   align-items: center;
   flex-direction: ${(p: Props) => (p.reversed ? 'row-reverse' : 'row')};

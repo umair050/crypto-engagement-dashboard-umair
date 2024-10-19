@@ -46,3 +46,16 @@
   /* color: #495057; */
   font-weight: 500;
 }
+
+.btn{
+  margin-top: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  color: #ffffff;
+}
+
+.btn-primary{
+  background-color: #28a745;
+  color: #ffffff;
+}

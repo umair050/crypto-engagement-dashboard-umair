@@ -76,8 +76,8 @@ export default function RootLayout({
               {/* Check if pathname contains dashboard/ */}
               {!pathname.includes("dashboard") && (
                 <>
+                <GlobalStyle />
                   <ColorModeScript />
-                  <GlobalStyle />
 
                   <Providers>
                     <Elements stripe={stripePromise}>

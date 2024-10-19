@@ -63,8 +63,10 @@ const CheckoutForm= ({priceId}:CheckoutFormProps ) => {
 };
 
 
-const CustomButton = styled(Button)`
+const CustomButton = styled(Button)<{ disabled?: boolean }>`
   width: 100%;
+  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 `;
 
 export default CheckoutForm;

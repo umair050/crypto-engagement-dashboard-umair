@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parse } from 'cookie';
-import { cookies } from 'next/headers';
 
 export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('access');
@@ -28,7 +27,9 @@ export function middleware(request: NextRequest) {
      // Check subscription status
      if (user?.subscription_status === 'inactive') {
       // Redirect to pricing page if the account is inactive
-      return NextResponse.redirect(new URL('/pricing', request.url));
+      const url = request.nextUrl.clone();
+      url.pathname = '/pricing';
+      return NextResponse.redirect(url);
     }
   }
 

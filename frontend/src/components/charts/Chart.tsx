@@ -87,29 +87,13 @@ export const LineChart: React.FC<{ dates: any; prices: any }> = ({
   const totalPages = Math.ceil(dates.length / itemsPerPage);
 
     return (
+      <>
         <div>
             <div className="chart-container">
                 <div className="chart-shadow">
                     <Line data={data} options={options} />
                 </div>
-            </div>
-{/*             <div className="pagination-controls">
-                <button
-                    onClick={() => setPage(page - 1)}
-                    disabled={page === 0}
-                    className="circle-button"
-                >
-                    <span className="chevron left"></span>
-                </button>
-                
-                <button
-                    onClick={() => setPage(page + 1)}
-                    disabled={page >= totalPages - 1}
-                    className="circle-button"
-                >
-                    <span className="chevron right"></span>
-                </button>
-            </div> */}
+            </div> 
             <style jsx>{`
                 .chart-container {
                     position: relative;
@@ -216,8 +200,7 @@ export const LineChart: React.FC<{ dates: any; prices: any }> = ({
                     }
                 }
             `}</style>
-        </div>
-      </div>
+        </div> 
       <div className="pagination-controls">
         <button
           onClick={() => setPage(page - 1)}
@@ -235,113 +218,8 @@ export const LineChart: React.FC<{ dates: any; prices: any }> = ({
           <span className="chevron right"></span>
         </button>
       </div>
-      <style jsx>{`
-        .chart-container {
-          position: relative;
-          width: 100%;
-          max-width: 1000px;
-          height: 350px;
-          background: linear-gradient(135deg, #8e44ad, #f39c12);
-          padding: 20px;
-          border-radius: 10px;
-          margin: 0 auto;
-        }
+      </>
 
-        .chart-shadow {
-          width: 100%;
-          height: 100%;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-          border-radius: 10px;
-          overflow: hidden;
-        }
-
-        .pagination-controls {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 20px;
-        }
-
-        .circle-button {
-          background-color: #2c3e50;
-          color: #ecf0f1;
-          border: none;
-          padding: 10px;
-          margin: 0 5px;
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .circle-button:disabled {
-          background-color: #95a5a6;
-          cursor: not-allowed;
-        }
-
-        .circle-button:hover:not(:disabled) {
-          background-color: #34495e;
-          transform: scale(1.1);
-        }
-
-        .chevron {
-          border: solid #ecf0f1;
-          border-width: 0 3px 3px 0;
-          display: inline-block;
-          padding: 3px;
-        }
-
-        .chevron.left {
-          transform: rotate(135deg);
-          -webkit-transform: rotate(135deg);
-        }
-
-        .chevron.right {
-          transform: rotate(-45deg);
-          -webkit-transform: rotate(-45deg);
-        }
-
-        @media (max-width: 768px) {
-          .chart-container {
-            width: 100%;
-            height: 300px;
-            padding: 10px;
-          }
-
-          .circle-button {
-            width: 30px;
-            height: 30px;
-          }
-
-          .chevron {
-            border-width: 0 2px 2px 0;
-            padding: 2px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .chart-container {
-            width: 100%;
-            height: 250px;
-            padding: 5px;
-          }
-
-          .circle-button {
-            width: 25px;
-            height: 25px;
-          }
-
-          .chevron {
-            border-width: 0 1.5px 1.5px 0;
-            padding: 1.5px;
-          }
-        }
-      `}</style>
-    </div>
   );
 };
 
