@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import ArticleCard from 'components/ArticleCard';
-import Container from 'components/Container';
-import OverTitle from 'components/OverTitle';
-import SectionTitle from 'components/SectionTitle';
-import { useResizeObserver } from 'hooks/useResizeObserver';
-import { SingleArticle } from 'types';
+import ArticleCard from '@/components/ArticleCard';
+import Container from '@/components/Container';
+import OverTitle from '@/components/OverTitle';
+import SectionTitle from '@/components/SectionTitle';
+import { useResizeObserver } from '@/hooks/useResizeObserver'; 
 import { media } from '@/utils/media';
+import { SingleArticle } from '../../../types';
 
 interface ScrollableBlogPostsProps {
   posts: SingleArticle[];
