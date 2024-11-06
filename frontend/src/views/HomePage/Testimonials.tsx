@@ -26,7 +26,7 @@ sentiment analysis in the crypto space.`,
     author: {
       name: "Sarah Williams",
       title: "Head of Research, CryptoTech Analytics",
-      avatarUrl: "/testimonials/author-photo-2.jpeg",
+      avatarUrl: "/testimonials/author-photo-3.jpeg",
     },
   },
   {
@@ -36,7 +36,7 @@ crypto trading.`,
     author: {
       name: "Michael Rodriguez",
       title: "Independent Trader",
-      avatarUrl: "/testimonials/author-photo-3.jpeg",
+      avatarUrl: "/testimonials/author-photo-2.jpeg",
     },
   },
 ];
