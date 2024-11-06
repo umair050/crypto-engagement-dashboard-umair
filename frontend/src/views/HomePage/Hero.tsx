@@ -18,20 +18,18 @@ export default function Hero() {
         <CustomOverTitle>
           the coolest, saas product you have ever seen
         </CustomOverTitle>
-        <Heading>Make your life easier with our SaaS</Heading>
+        <Heading>STRATAMIND: SOCIAL INTELLIGENCE FOR CRYPTO MARKETS</Heading>
         <Description>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis,
-          tempora qui. Explicabo voluptate iure ipsum molestias repudiandae
-          perspiciatis nostrum praesentium, unde pariatur tempora magni rem.
-          Necessitatibus facilis obcaecati ratione.
+          Transform social signals into actionable crypto insights with our
+          pioneering engagement scoring system
         </Description>
         <CustomButtonGroup>
           <Button onClick={() => setIsModalOpened(true)}>
-            Subscribe to the newsletter <span>&rarr;</span>
+            START TRACKING NOW <span>&rarr;</span>
           </Button>
           <Link href="#whitepaper">
             <Button transparent>
-              Features <span>&rarr;</span>
+              VIEW LIVE DEMO <span>&rarr;</span>
             </Button>
           </Link>
         </CustomButtonGroup>

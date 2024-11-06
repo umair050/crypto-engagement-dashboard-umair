@@ -88,8 +88,8 @@ export default function FeaturesGallery() {
   return (
     <FeaturesGalleryWrapper>
       <Content>
-        <OverTitle>features</OverTitle>
-        <SectionTitle>What are you signing in for?</SectionTitle>
+        <OverTitle>What sets StrataMind apart?</OverTitle>
+        <SectionTitle>POWERFUL FEATURES FOR CRYPTO TRADERS</SectionTitle>
       </Content>
       <GalleryWrapper>
         <TabsContainer>{tabsMarkup}</TabsContainer>

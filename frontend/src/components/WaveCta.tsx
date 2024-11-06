@@ -1,18 +1,22 @@
-import NextLink from 'next/link';
-import styled from 'styled-components';
-import Button from '@/components/Button';
-import ButtonGroup from '@/components/ButtonGroup';
-import Container from '@/components/Container';
-import SectionTitle from '@/components/SectionTitle';
-import { useNewsletterModalContext } from '@/contexts/newsletter-modal.context';
-import { media } from '@/utils/media';
+import NextLink from "next/link";
+import styled from "styled-components";
+import Button from "@/components/Button";
+import ButtonGroup from "@/components/ButtonGroup";
+import Container from "@/components/Container";
+import SectionTitle from "@/components/SectionTitle";
+import { useNewsletterModalContext } from "@/contexts/newsletter-modal.context";
+import { media } from "@/utils/media";
 
 export default function WaveCta() {
   const { setIsModalOpened } = useNewsletterModalContext();
 
   return (
     <>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+        preserveAspectRatio="none"
+      >
         <path
           fill="#0A121E"
           fillOpacity="1"
@@ -21,10 +25,13 @@ export default function WaveCta() {
       </svg>
       <CtaWrapper>
         <Container>
-          <Title>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</Title>
+          <Title>Start Tracking Crypto Social Trends Toda</Title>
+          <Description>
+            Get instant access to our powerful social intelligence platform
+          </Description>
           <CustomButtonGroup>
             <Button onClick={() => setIsModalOpened(true)}>
-              Subscribe to the newsletter <span>&rarr;</span>
+              START FREE TRIAL <span>&rarr;</span>
             </Button>
             <NextLink href="/features" passHref>
               <OutlinedButton transparent>
@@ -43,14 +50,14 @@ const CtaWrapper = styled.div`
   margin-top: -1rem;
   padding-bottom: 16rem;
 
-  ${media('<=tablet')} {
+  ${media("<=tablet")} {
     padding-top: 8rem;
   }
 `;
 
 const Title = styled(SectionTitle)`
   color: rgb(var(--textSecondary));
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 `;
 
 const OutlinedButton = styled(Button)`
@@ -60,4 +67,15 @@ const OutlinedButton = styled(Button)`
 
 const CustomButtonGroup = styled(ButtonGroup)`
   justify-content: center;
+`;
+const Description = styled.p`
+  font-size: 1.8rem;
+  opacity: 0.8;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 4rem;
+
+  ${media("<=desktop")} {
+    font-size: 1.5rem;
+  }
 `;

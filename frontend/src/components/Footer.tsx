@@ -1,9 +1,9 @@
-import NextLink from 'next/link';
-import { FacebookIcon, LinkedinIcon, TwitterIcon } from 'react-share';
-import styled from 'styled-components';
-import Container from '@/components/Container';
-import { media } from '@/utils/media';
-import Link from 'next/link';
+import NextLink from "next/link";
+import { FacebookIcon, LinkedinIcon, TwitterIcon } from "react-share";
+import styled from "styled-components";
+import Container from "@/components/Container";
+import { media } from "@/utils/media";
+import Link from "next/link";
 
 type SingleFooterListItem = { title: string; href: string };
 type FooterListItems = SingleFooterListItem[];
@@ -12,38 +12,30 @@ type FooterItems = SingleFooterList[];
 
 const footerItems: FooterItems = [
   {
-    title: 'Company',
+    title: "Company",
     items: [
-      { title: 'Privacy Policy', href: '/privacy-policy' },
-      { title: 'Cookies Policy', href: '/cookies-policy' },
+      { title: "About Us", href: "/cookies-policy" },
+      { title: "Terms of Service", href: "/cookies-policy" },
+      { title: "Privacy Policy", href: "/privacy-policy" },
     ],
   },
   {
-    title: 'Product',
+    title: "Product",
     items: [
-      { title: 'Features', href: '/features' },
-      { title: 'Something', href: '/something' },
-      { title: 'Something else', href: '/something-else' },
-      { title: 'And something else', href: '/and-something-else' },
+      { title: "Features", href: "/features" },
+      { title: "Pricing", href: "/pricing" },
     ],
   },
   {
-    title: 'Knowledge',
+    title: "Resources",
     items: [
-      { title: 'Blog', href: '/blog' },
-      { title: 'Contact', href: '/contact' },
-      { title: 'FAQ', href: '/faq' },
-      { title: 'Help Center', href: '/help-center' },
+      { title: "Documentation", href: "/blog" },
+      { title: "Help Center", href: "/help-center" },
     ],
   },
   {
-    title: 'Something',
-    items: [
-      { title: 'Features2', href: '/features2' },
-      { title: 'Something2', href: '/something2' },
-      { title: 'Something else2', href: '/something-else2' },
-      { title: 'And something else2', href: '/and-something-else2' },
-    ],
+    title: "Contact Info",
+    items: [{ title: "Email: ryg94@stratamind.io", href: "/blog" }],
   },
 ];
 
@@ -59,21 +51,15 @@ export default function Footer() {
         <BottomBar>
           <ShareBar>
             <Link href="https://www.twitter.com/my-saas-startup" passHref>
-             
-                <TwitterIcon size={50} round={true} />
-              
+              <TwitterIcon size={50} round={true} />
             </Link>
 
             <Link href="https://www.facebook.com/my-saas-startup" passHref>
-             
-                <FacebookIcon size={50} round={true} />
-              
+              <FacebookIcon size={50} round={true} />
             </Link>
 
             <Link href="https://www.linkedin.com/my-saas-startup" passHref>
-             
-                <LinkedinIcon size={50} round={true} />
-              
+              <LinkedinIcon size={50} round={true} />
             </Link>
           </ShareBar>
           <Copyright>&copy; Copyright 2021 My Saas Startup</Copyright>
@@ -98,7 +84,7 @@ function ListItem({ title, href }: SingleFooterListItem) {
   return (
     <ListItemWrapper>
       <Link href={href} passHref>
-       {title}
+        {title}
       </Link>
     </ListItemWrapper>
   );
@@ -134,12 +120,12 @@ const ListWrapper = styled.div`
     margin-top: 1rem;
   }
 
-  ${media('<=tablet')} {
+  ${media("<=tablet")} {
     flex: 0 40%;
     margin-right: 1.5rem;
   }
 
-  ${media('<=phone')} {
+  ${media("<=phone")} {
     flex: 0 100%;
     margin-right: 0rem;
   }
@@ -171,7 +157,7 @@ const BottomBar = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  ${media('<=tablet')} {
+  ${media("<=tablet")} {
     flex-direction: column;
   }
 `;

@@ -1,18 +1,22 @@
-import NextImage from 'next/image';
-import styled from 'styled-components';
+import NextImage from "next/image";
+import styled from "styled-components";
 
 interface BasicCardProps {
   title: string;
   description: string;
-  imageUrl: string;
+  // imageUrl: string;
 }
 
-export default function BasicCard({ title, description, imageUrl }: BasicCardProps) {
+export default function BasicCard({ title, description }: BasicCardProps) {
   return (
     <Card>
-      <NextImage src={imageUrl} width={128} height={128} alt={title} />
+      {/* <NextImage src={imageUrl} width={128} height={128} alt={title} /> */}
       <Title>{title}</Title>
-      <Description>{description}</Description>
+      <Description>
+        {description.split("\n").map((line, index) => (
+          <div key={index}>{line}</div>
+        ))}
+      </Description>
     </Card>
   );
 }
@@ -25,7 +29,7 @@ const Card = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: start;
   width: 100%;
   border-radius: 0.6rem;
   color: rgb(var(--text));

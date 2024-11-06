@@ -1,16 +1,16 @@
 "use client";
 
-import Head from 'next/head';
-import styled from 'styled-components'; 
-import BasicSection from '@/components/BasicSection';
-import Testimonials from '@/views/HomePage/Testimonials';
-import Hero from '@/views/HomePage/Hero'; 
-import Partners from '@/views/HomePage/Partners'; 
-import { EnvVars } from '../../env';
-import Cta from '@/views/HomePage/Cta';
-import FeaturesGallery from '@/views/HomePage/FeaturesGallery';
-import Features from '@/views/HomePage/Features';
-import CustomLink from '@/components/CustomLink';
+import Head from "next/head";
+import styled from "styled-components";
+import BasicSection from "@/components/BasicSection";
+import Testimonials from "@/views/HomePage/Testimonials";
+import Hero from "@/views/HomePage/Hero";
+import Partners from "@/views/HomePage/Partners";
+import { EnvVars } from "../../env";
+import Cta from "@/views/HomePage/Cta";
+import FeaturesGallery from "@/views/HomePage/FeaturesGallery";
+import Features from "@/views/HomePage/Features";
+import CustomLink from "@/components/CustomLink";
 
 export default function Homepage() {
   return (
@@ -28,34 +28,34 @@ export default function Homepage() {
           <Partners />
           <BasicSection
             imageUrl="/demo-illustration-1.svg"
-            title="Lorem ipsum dolor sit amet consectetur."
-            overTitle="sit amet gogo"
+            title="Turn social noise into clear signals"
+            overTitle="PRECISION ENGAGEMENT SCORING"
           >
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, quidem error incidunt a doloremque voluptatem porro inventore
-              voluptate quo deleniti animi laboriosam.{' '}
-              <CustomLink href="/help-center">Possimus ullam velit rem itaque consectetur, in distinctio?</CustomLink> Lorem ipsum, dolor sit amet
-              consectetur adipisicing elit. Soluta repellendus quia quos obcaecati nihil. Laudantium non accusantium, voluptate eum nesciunt
-              at suscipit quis est soluta?Test
+              Our proprietary algorithm consolidates social media engagement
+              across platforms into a single, actionable score from 0 to 1.
+              Track tweets, retweets, likes, and shares in real-time to spot
+              emerging trends before they peak.
             </p>
           </BasicSection>
           <BasicSection
             imageUrl="/demo-illustration-2.svg"
-            title="Lorem ipsum dolor sit."
-            overTitle="lorem ipsum"
+            title="Never miss a trending token."
+            overTitle="INSTANT MARKET PULSE"
             reversed
           >
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-              quidem error incidunt a doloremque voluptatem porro inventore{" "}
-              <strong>voluptate quo deleniti animi laboriosam</strong>. Possimus
-              ullam velit rem itaque consectetur, in distinctio?
+              StrataMind continuously monitors social media activity across
+              major platforms, providing instant alerts when cryptocurrencies
+              start gaining significant social traction. Our system processes
+              millions of social signals to give you the earliest possible
+              indication of emerging trends.
             </p>
-            <ul>
-              <li>Professional point 1</li>
+            {/* <ul>
+              <li>test</li>
               <li>Professional remark 2</li>
               <li>Professional feature 3</li>
-            </ul>
+            </ul> */}
           </BasicSection>
         </WhiteBackgroundContainer>
         <DarkerBackgroundContainer>

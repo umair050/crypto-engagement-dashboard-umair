@@ -10,58 +10,28 @@ import Container from "@/components/Container";
 
 const FEATURES = [
   {
-    imageUrl: "/grid-icons/asset-1.svg",
-    title: "Lorem ipsum dolor sit amet.",
+    // imageUrl: "/grid-icons/asset-1.svg",
+    title: "Unified Engagement Score",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+      "- Real-time scoring from 0 to 1\n- Cross-platform signal integration\n- Weighted engagement metrics",
   },
   {
-    imageUrl: "/grid-icons/asset-2.svg",
-    title: "Lorem ipsum dolor sit amet.",
+    // imageUrl: "/grid-icons/asset-2.svg",
+    title: "Trend Detection",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+      "- Early pattern recognition\n- Automated alert system\n- Historical trend comparison",
   },
   {
-    imageUrl: "/grid-icons/asset-3.svg",
-    title: "Lorem ipsum dolor sit amet.",
+    // imageUrl: "/grid-icons/asset-3.svg",
+    title: "Platform Analytics",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+      "- Twitter engagement metrics\n- Reddit sentiment analysis (coming soon)\n- Discord activity tracking (coming soon)",
   },
   {
-    imageUrl: "/grid-icons/asset-4.svg",
-    title: "Lorem ipsum dolor sit amet.",
+    // imageUrl: "/grid-icons/asset-4.svg",
+    title: "Custom Alerts(all features coming soon)",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-5.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-6.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-7.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-8.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-9.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+      "- Score threshold notifications\n- Sudden spike detection\n- Custom alert conditions",
   },
 ];
 

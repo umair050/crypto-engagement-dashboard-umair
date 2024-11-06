@@ -1,39 +1,42 @@
-import NextImage from 'next/image';
-import React from 'react';
-import styled from 'styled-components';
+import NextImage from "next/image";
+import React from "react";
+import styled from "styled-components";
 
-import { A11y, Autoplay, Navigation } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import Container from '@/components/Container'; 
-import Separator from '@/components/Separator';
-import { media } from '@/utils/media';
+import { A11y, Autoplay, Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Container from "@/components/Container";
+import Separator from "@/components/Separator";
+import { media } from "@/utils/media";
 
 const TESTIMONIALS = [
   {
-    companyLogoUrl: '/testimonials/company-logo-1.svg',
-    content: `Really good. I am so pleased with this product. I didn't even need training.`,
+    companyLogoUrl: "/testimonials/company-logo-1.svg",
+    content: `StrataMind's scoring system helped us identify three emerging tokens before they went viral.
+The unified engagement score is a game-changer for our trading strategy.`,
     author: {
-      name: 'Clyde Edwards',
-      title: 'Very Serious Man',
-      avatarUrl: '/testimonials/author-photo-1.jpeg',
+      name: " Alex Chen",
+      title: "Crypto Fund Manager, BlockVentures",
+      avatarUrl: "/testimonials/author-photo-1.jpeg",
     },
   },
   {
-    companyLogoUrl: '/testimonials/company-logo-2.svg',
-    content: `It's really wonderful. I use saas product often. Thank You! Saas product has really helped our business.`,
+    companyLogoUrl: "/testimonials/company-logo-2.svg",
+    content: `The real-time alerts and clear scoring system have revolutionized our approach to social
+sentiment analysis in the crypto space.`,
     author: {
-      name: 'Jimmy Hunter',
-      title: 'Sigma Male University Graduate',
-      avatarUrl: '/testimonials/author-photo-2.jpeg',
+      name: "Sarah Williams",
+      title: "Head of Research, CryptoTech Analytics",
+      avatarUrl: "/testimonials/author-photo-2.jpeg",
     },
   },
   {
-    companyLogoUrl: '/testimonials/company-logo-3.svg',
-    content: `Since I invested in saas product I made over 100,000 dollars profits. It really saves me time and effort. saas product is exactly what our business has been lacking.`,
+    companyLogoUrl: "/testimonials/company-logo-3.svg",
+    content: `Finally, a tool that cuts through the social media noise and delivers actionable insights for
+crypto trading.`,
     author: {
-      name: 'Marjorie Morgan',
-      title: 'Chief Chad Officer',
-      avatarUrl: '/testimonials/author-photo-3.jpeg',
+      name: "Michael Rodriguez",
+      title: "Independent Trader",
+      avatarUrl: "/testimonials/author-photo-3.jpeg",
     },
   },
 ];
@@ -43,7 +46,14 @@ export default function Testimonials() {
     <div>
       <Separator />
       <TestimonialsWrapper>
-        <Swiper modules={[Navigation, Autoplay, A11y]} slidesPerView={1} autoplay={{ delay: 8000 }} centeredSlides navigation loop>
+        <Swiper
+          modules={[Navigation, Autoplay, A11y]}
+          slidesPerView={1}
+          autoplay={{ delay: 8000 }}
+          centeredSlides
+          navigation
+          loop
+        >
           {TESTIMONIALS.map((singleTestimonial, idx) => (
             <SwiperSlide key={idx}>
               <TestimonialCard>
@@ -56,7 +66,12 @@ export default function Testimonials() {
                 <Content>“{singleTestimonial.content}”</Content>
                 <AuthorContainer>
                   <AuthorImageContainer>
-                    <NextImage src={singleTestimonial.author.avatarUrl} alt={singleTestimonial.author.name} width={48} height={48} />
+                    <NextImage
+                      src={singleTestimonial.author.avatarUrl}
+                      alt={singleTestimonial.author.name}
+                      width={48}
+                      height={48}
+                    />
                   </AuthorImageContainer>
                   <AuthorContent>
                     <AuthorName>{singleTestimonial.author.name}</AuthorName>
@@ -80,7 +95,7 @@ const TestimonialsWrapper = styled(Container)`
   .swiper-button-next {
     color: rgb(var(--secondary));
 
-    ${media('<=desktop')} {
+    ${media("<=desktop")} {
       display: none;
     }
   }
@@ -113,7 +128,7 @@ const Content = styled.blockquote`
   font-style: italic;
   max-width: 60%;
 
-  ${media('<=desktop')} {
+  ${media("<=desktop")} {
     max-width: 100%;
   }
 `;
