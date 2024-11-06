@@ -15,9 +15,7 @@ export default function Hero() {
   return (
     <HeroWrapper>
       <Contents>
-        <CustomOverTitle>
-          the coolest, saas product you have ever seen
-        </CustomOverTitle>
+        <CustomOverTitle>Hero Section</CustomOverTitle>
         <Heading>STRATAMIND: SOCIAL INTELLIGENCE FOR CRYPTO MARKETS</Heading>
         <Description>
           Transform social signals into actionable crypto insights with our

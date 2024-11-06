@@ -28,9 +28,10 @@ export default function Homepage() {
           <Partners />
           <BasicSection
             imageUrl="/demo-illustration-1.svg"
-            title="Turn social noise into clear signals"
-            overTitle="PRECISION ENGAGEMENT SCORING"
+            title="PRECISION ENGAGEMENT SCORING"
+            overTitle=" Unified Scoring System"
           >
+            <h3>Turn social noise into clear signals</h3>
             <p>
               Our proprietary algorithm consolidates social media engagement
               across platforms into a single, actionable score from 0 to 1.
@@ -40,10 +41,11 @@ export default function Homepage() {
           </BasicSection>
           <BasicSection
             imageUrl="/demo-illustration-2.svg"
-            title="Never miss a trending token."
-            overTitle="INSTANT MARKET PULSE"
+            title="INSTANT MARKET PULSE"
+            overTitle="Real-Time Analytics"
             reversed
           >
+            <h3>Never miss a trending token</h3>
             <p>
               StrataMind continuously monitors social media activity across
               major platforms, providing instant alerts when cryptocurrencies
