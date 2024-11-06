@@ -1,0 +1,132 @@
+/* General Variables */
+:root {
+  --shadow-md: 0 2px 4px 0 rgb(12 0 46 / 4%);
+  --shadow-lg: 0 10px 14px 0 rgb(12 0 46 / 6%);
+  --background: 26, 32, 44;
+  --secondBackground: 45, 55, 72;
+  --text: 237, 237, 238;
+  --textSecondary: 255, 255, 255;
+  --primary: 22, 115, 255;
+  --secondary: 10, 18, 30;
+  --tertiary: 231, 241, 251;
+  --cardBackground: 45, 55, 72;
+  --inputBackground: 45, 55, 72;
+  --navbarBackground: 45, 55, 72;
+  --modalBackground: 26, 32, 44;
+  --errorColor: 207, 34, 46;
+  --logoColor: #fff;
+  --font: "Poppins", sans-serif;
+}
+
+/* Container for the entire form */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgb(var(--background));
+}
+
+/* Styling for the form */
+.login-form {
+  background-color: rgb(var(--cardBackground));
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Input group styling */
+.input-group {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: flex;
+  color: rgb(var(--text), 0.75);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  margin-bottom: 8px;
+}
+
+/* Input field styling */
+.input {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background-color: rgb(var(--secondary));
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: rgb(var(--text));
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(var(--primary), 0.8);
+  box-shadow: var(--shadow-md);
+}
+
+/* Input error state */
+.input-error {
+  border-color: rgba(var(--errorColor), 1);
+}
+
+.error-text {
+  color: rgba(var(--errorColor), 1);
+  font-size: 12px;
+}
+
+/* Button and link styles */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submit-btn {
+  background-color: rgb(var(--primary));
+  color: rgb(var(--textSecondary));
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  box-shadow: var(--shadow-md);
+  font-family: var(--font);
+}
+
+.submit-btn:hover {
+  background-color: rgba(var(--primary), 0.8);
+}
+
+.forgot-link {
+  color: rgba(var(--primary), 1);
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+  color: rgba(var(--primary), 0.8);
+}
+
+/* Footer text */
+.footer-text {
+  text-align: center;
+  color: rgb(var(--text), 0.5);
+  font-size: 12px;
+  margin-top: 16px;
+  font-family: var(--font);
+}

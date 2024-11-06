@@ -1,0 +1,61 @@
+/* Center the message-box */
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.message-box {
+  max-width: 500px; /* You can control the modal width */
+  margin: auto; /* Center the modal */
+  background-color: rgb(var(--cardBackground));
+}
+
+/* Failed message */
+._failed {
+  border-bottom: solid 4px red !important;
+}
+
+._failed i {
+  color: red !important;
+}
+
+/* Success message */
+._success {
+  box-shadow: 0 15px 25px #00000019;
+  padding: 45px;
+  text-align: center;
+  margin: 40px auto;
+  border-bottom: solid 4px #28a745;
+}
+
+._success i {
+  font-size: 55px;
+  color: #28a745;
+}
+
+._success h2 {
+  margin-bottom: 12px;
+  font-size: 40px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+._success p {
+  margin-bottom: 0px;
+  font-size: 18px;
+  /* color: #495057; */
+  font-weight: 500;
+}
+
+.btn{
+  margin-top: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  color: #ffffff;
+}
+
+.btn-primary{
+  background-color: #28a745;
+  color: #ffffff;
+}

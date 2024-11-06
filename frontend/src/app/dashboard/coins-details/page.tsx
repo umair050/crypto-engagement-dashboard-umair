@@ -43,7 +43,7 @@ const Page = () => {
           <TopNav active={1} />
 
           <div>
-            <Tables />
+            <Tables tableProps={[]} />
           </div>
           <div className="chart-cont">
             {/* <Charts data={dummyData} /> */}

@@ -23,10 +23,18 @@ const Login = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const res = await login({username, password})
+    console.log("Form submission", res);
+
+    if(res.user && res.user.subscription_status =="inactive"){
+      // toast.error("Your account is currently inactive. Please contact support.")
+      return push("/pricing")
+
+    }
+    
 
     if (res.success) {
       toast.success("Login Successfull. Welcome.")
-      push("/")
+      push("/dashboard")
     } else {
       toast.error("Login Faild, Try Again")
 
@@ -68,7 +76,7 @@ const Login = () => {
       </div>
 
       <div className="text-center">
-        <a href="/register" className="btn bg-gradient-secondary w-100 mt-4 mb-0">Sign UP</a>
+        <a href="/dashboard/register" className="btn bg-gradient-secondary w-100 mt-4 mb-0">Sign UP</a>
       </div>
     </form>
   );

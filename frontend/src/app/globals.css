@@ -3,25 +3,74 @@
 @import "../styles/css/nucleo-svg.css";
 @import "../styles/css/soft-ui-dashboard.css";
 
-.chart-cont {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  padding: 40px;
+a{
+  text-decoration: none;
 }
 
-@media (max-width: 768px) {
+.chart-cont {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 40px;
+  width: 90%;
+}
+
+@media (max-width: 1350px) and (min-width: 645px) {
   .chart-cont {
-    width: 200px;
-    grid-template-columns: 1fr;
-    padding: 20px;
+    width: 90%;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 644px) {
   .chart-cont {
-    width: 150px;
+    width: 100%;
     grid-template-columns: 1fr;
     padding: 10px;
   }
+}
+
+.chart-cont-3 {
+  display: grid;
+  width: 90%;
+
+  gap: 10px; /* Adjust the gap size as needed */
+  grid-template-columns: repeat(3, 1fr);
+  padding: 40px; /* Default to 3 columns for larger screens */
+}
+
+/* For screens from 645px to 1350px */
+@media (max-width: 1350px) and (min-width: 645px) {
+  .chart-cont-3 {
+    width: 90%;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* For screens below 645px */
+@media (max-width: 644px) {
+  .chart-cont-3 {
+    width: 100%;
+    grid-template-columns: 1fr;
+    padding: 10px; /* Adjust padding as needed */
+  }
+}
+.status-bar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
 }

@@ -1,43 +1,105 @@
+"use client";
 
-import TopNav from "@/components/Navigation/TopNav";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import axios from "axios";
-import { BarChart } from "@/components/charts/Chart";
-import Charts from "@/components/pages/charts";
-import { cookies } from "next/headers";
+import Head from "next/head";
+import styled from "styled-components";
+import BasicSection from "@/components/BasicSection";
+import Testimonials from "@/views/HomePage/Testimonials";
+import Hero from "@/views/HomePage/Hero";
+import Partners from "@/views/HomePage/Partners";
+import { EnvVars } from "../../env";
+import Cta from "@/views/HomePage/Cta";
+import FeaturesGallery from "@/views/HomePage/FeaturesGallery";
+import Features from "@/views/HomePage/Features";
+import CustomLink from "@/components/CustomLink";
 
-
-export default async function Home() {
-  const access = cookies().get("access")
-
-  if (!access) {
-    return <></>
-  }
-  let res_table;
-  try {
-    res_table = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/home/analysis`, { headers: { "Authorization": `Bearer ${access.value}` } });
-
-  } catch (e: any) {
-    console.log(e)
-  }
-
+export default function Homepage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Sidebar active={-1} />
-      <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-        <TopNav active={-1} />
-        <div className="chart-cont">
-          {res_table && res_table.data.coin_data.map((item: any, idx: number) => (
-            <div key={idx}>
-              <div style={{}}>{item.coin}</div>
-              <div>
-                <BarChart coinData={item} />
-              </div>
-            </div>
-          ))}
-          <Charts />
-        </div>
-      </main>
-    </main>
+    <>
+      <Head>
+        <title>{EnvVars.SITE_NAME}</title>
+        <meta
+          name="description"
+          content="Tempor nostrud velit fugiat nostrud duis incididunt Lorem deserunt est tempor aute dolor ad elit."
+        />
+      </Head>
+      <HomepageWrapper>
+        <WhiteBackgroundContainer>
+          <Hero />
+          <Partners />
+          <BasicSection
+            imageUrl="/demo-illustration-1.svg"
+            title="Turn social noise into clear signals"
+            overTitle="PRECISION ENGAGEMENT SCORING"
+          >
+            <p>
+              Our proprietary algorithm consolidates social media engagement
+              across platforms into a single, actionable score from 0 to 1.
+              Track tweets, retweets, likes, and shares in real-time to spot
+              emerging trends before they peak.
+            </p>
+          </BasicSection>
+          <BasicSection
+            imageUrl="/demo-illustration-2.svg"
+            title="Never miss a trending token."
+            overTitle="INSTANT MARKET PULSE"
+            reversed
+          >
+            <p>
+              StrataMind continuously monitors social media activity across
+              major platforms, providing instant alerts when cryptocurrencies
+              start gaining significant social traction. Our system processes
+              millions of social signals to give you the earliest possible
+              indication of emerging trends.
+            </p>
+            {/* <ul>
+              <li>test</li>
+              <li>Professional remark 2</li>
+              <li>Professional feature 3</li>
+            </ul> */}
+          </BasicSection>
+        </WhiteBackgroundContainer>
+        <DarkerBackgroundContainer>
+          <Cta />
+          <FeaturesGallery />
+          <Features />
+          <Testimonials />
+          {/* <ScrollableBlogPosts posts={posts} /> */}
+        </DarkerBackgroundContainer>
+      </HomepageWrapper>
+    </>
   );
 }
+
+const HomepageWrapper = styled.div`
+  & > :last-child {
+    margin-bottom: 15rem;
+  }
+`;
+
+const DarkerBackgroundContainer = styled.div`
+  background: rgb(var(--background));
+
+  & > *:not(:first-child) {
+    margin-top: 15rem;
+  }
+`;
+
+const WhiteBackgroundContainer = styled.div`
+  background: rgb(var(--secondBackground));
+
+  & > :last-child {
+    padding-bottom: 15rem;
+  }
+
+  & > *:not(:first-child) {
+    margin-top: 15rem;
+  }
+`;
+
+// export async function getStaticProps() {
+//   return {
+//     props: {
+//       posts: await getAllPosts(),
+//     },
+//   };
+// }
