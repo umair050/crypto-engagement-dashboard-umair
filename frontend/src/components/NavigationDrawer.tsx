@@ -67,10 +67,18 @@ function NavItemsList({ items }: NavigationDrawerProps) {
 }
 
 function DrawerCloseButton() {
+  const { close } = OriginalDrawer.useDrawer(); // Access the close function here
   const ref = useRef(null);
   const a11yProps = OriginalDrawer.useA11yCloseButton(ref);
 
-  return <CloseIcon className="close-icon" ref={ref} {...a11yProps} />;
+  return (
+    <CloseIcon
+      className="close-icon"
+      ref={ref}
+      onClick={close} // Ensure the close function is called on click
+      {...a11yProps}
+    />
+  );
 }
 
 const Wrapper = styled.div`
