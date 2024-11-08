@@ -6,7 +6,6 @@ import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import dynamic from "next/dynamic";
 import { ColorModeScript } from "nextjs-color-mode";
 import React, {
   Component,
@@ -26,7 +25,7 @@ import {
   useNewsletterModalContext,
 } from "@/contexts/newsletter-modal.context";
 import { NavItems } from "../../types";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LoadingPage from "./LoadingPage";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -47,19 +46,32 @@ export default function RootLayout({
 }>) {
   const [isGlobalStyleLoaded, setIsGlobalStyleLoaded] = useState(false);
   const pathname = usePathname();
-  const stripePromise = loadStripe(NEXT_STRIPE_PUBLIC_KEY || "");
+  const router = useRouter(); // Access the router object
 
- 
+  const stripePromise = loadStripe(NEXT_STRIPE_PUBLIC_KEY || "");
 
   // Effect to simulate GlobalStyle loading
   useEffect(() => {
-    // Simulating GlobalStyle loading, you can adapt it based on actual loading logic
     setTimeout(() => {
-      console.log("LOading....");
-
+      console.log("Loading...");
       setIsGlobalStyleLoaded(true);
     }, 500); // Simulate delay for style loading (adjust as needed)
   }, []);
+
+  useEffect(() => {
+    const previousRoute = sessionStorage.getItem("previousRoute");
+
+    // If the previous route contained "dashboard" and the current route doesn't, reload the page
+    if (
+      previousRoute?.includes("dashboard") &&
+      !pathname.includes("dashboard")
+    ) {
+      window.location.reload();
+    }
+
+    // Store the current route as the previous route for next navigation
+    sessionStorage.setItem("previousRoute", pathname);
+  }, [pathname]); // Trigger this effect on route change
 
   return (
     <>
@@ -68,7 +80,10 @@ export default function RootLayout({
           <title>Crypto Engagement Dashboard</title>
           <link rel="icon" href="/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+            rel="stylesheet"
+          />
         </head>
         <body>
           {isGlobalStyleLoaded ? (
@@ -76,9 +91,8 @@ export default function RootLayout({
               {/* Check if pathname contains dashboard/ */}
               {!pathname.includes("dashboard") && (
                 <>
-                <GlobalStyle />
+                  <GlobalStyle />
                   <ColorModeScript />
-
                   <Providers>
                     <Elements stripe={stripePromise}>
                       <Suspense fallback={<LoadingPage />}>
@@ -98,9 +112,7 @@ export default function RootLayout({
               {pathname.includes("dashboard") && <>{children}</>}
             </>
           ) : (
-            <>
-              <LoadingPage />
-            </>
+            <LoadingPage />
           )}
         </body>
       </html>
