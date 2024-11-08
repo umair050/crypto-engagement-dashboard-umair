@@ -102,6 +102,7 @@ const Heading = styled.h1`
   line-height: 1.1;
   margin-bottom: 4rem;
   letter-spacing: -0.03em;
+  color: #4a90e2; /* Complementary light blue for strong contrast */
 
   ${media("<=tablet")} {
     font-size: 4.6rem;

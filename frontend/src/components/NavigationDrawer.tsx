@@ -46,6 +46,7 @@ function NavItemsList({ items }: NavigationDrawerProps) {
       close();
     }
 
+    // Uncomment the following lines if you want to close the drawer on route change
     // router.events.on('routeChangeComplete', handleRouteChangeComplete)
     // return () => router.events.off('routeChangeComplete', handleRouteChangeComplete)
   }, [close, router]);
@@ -55,7 +56,9 @@ function NavItemsList({ items }: NavigationDrawerProps) {
       {items.map((singleItem, idx) => {
         return (
           <NavItem key={idx}>
-            <Link href={singleItem.href}>{singleItem.title}</Link>
+            <Link href={singleItem.href} onClick={() => close()}>
+              {singleItem.title}
+            </Link>
           </NavItem>
         );
       })}
@@ -64,10 +67,18 @@ function NavItemsList({ items }: NavigationDrawerProps) {
 }
 
 function DrawerCloseButton() {
+  const { close } = OriginalDrawer.useDrawer(); // Access the close function here
   const ref = useRef(null);
   const a11yProps = OriginalDrawer.useA11yCloseButton(ref);
 
-  return <CloseIcon className="close-icon" _ref={ref} {...a11yProps} />;
+  return (
+    <CloseIcon
+      className="close-icon"
+      ref={ref}
+      onClick={close} // Ensure the close function is called on click
+      {...a11yProps}
+    />
+  );
 }
 
 const Wrapper = styled.div`
@@ -92,6 +103,7 @@ const Wrapper = styled.div`
     position: absolute;
     right: 2rem;
     top: 2rem;
+    cursor: pointer;
   }
 
   .drawer-closed {
@@ -128,5 +140,10 @@ const NavItem = styled.li`
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
 `;

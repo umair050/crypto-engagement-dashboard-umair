@@ -1,16 +1,19 @@
-"use client"
-import styled from 'styled-components';
-import Page from '@/components/Page';
-import FaqSection from '@/views/PricingPage/FaqSection';
-import PricingTablesSection from '@/views/PricingPage/PricingTablesSection';
-import React from 'react'; 
+"use client";
+import styled from "styled-components";
+import Page from "@/components/Page";
+import FaqSection from "@/views/PricingPage/FaqSection";
+import PricingTablesSection from "@/views/PricingPage/PricingTablesSection";
+import React from "react";
 
 export default function PricingPage() {
   return (
-    <Page title="Pricing" description="Cupidatat et reprehenderit ullamco aute ullamco anim tempor.">
+    <Page
+      title="Pricing"
+      description="Cupidatat et reprehenderit ullamco aute ullamco anim tempor."
+    >
       <Wrapper>
         <PricingTablesSection />
-        <FaqSection />
+        {/* <FaqSection /> */}
       </Wrapper>
     </Page>
   );

@@ -1,17 +1,21 @@
-import Head from 'next/head';
-import { PropsWithChildren } from 'react';
-import styled from 'styled-components'; 
-import { media } from '@/utils/media';
-import Container from './Container';
-import SectionTitle from './SectionTitle';
-import { EnvVars } from '../../env';
+import Head from "next/head";
+import { PropsWithChildren } from "react";
+import styled from "styled-components";
+import { media } from "@/utils/media";
+import Container from "./Container";
+import SectionTitle from "./SectionTitle";
+import { EnvVars } from "../../env";
 
 export interface PageProps {
   title: string;
   description?: string;
 }
 
-export default function Page({ title, description, children }: PropsWithChildren<PageProps>) {
+export default function Page({
+  title,
+  description,
+  children,
+}: PropsWithChildren<PageProps>) {
   return (
     <>
       <Head>
@@ -24,7 +28,13 @@ export default function Page({ title, description, children }: PropsWithChildren
         <HeaderContainer>
           <Container>
             <Title>{title}</Title>
-            {description && <Description>{description}</Description>}
+            {description && (
+              <Description>
+                {description.split("\n").map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
+              </Description>
+            )}
           </Container>
         </HeaderContainer>
         <Container>
@@ -59,7 +69,7 @@ const Description = styled.div`
   max-width: 60%;
   margin: auto;
 
-  ${media('<=tablet')} {
+  ${media("<=tablet")} {
     max-width: 100%;
   }
 `;
