@@ -25,7 +25,7 @@ export default function WaveCta() {
       </svg>
       <CtaWrapper>
         <Container>
-          <Title>Start Tracking Crypto Social Trends Toda</Title>
+          <Title>Start Tracking Crypto Social Trends Today</Title>
           <Description>
             Get instant access to our powerful social intelligence platform
           </Description>
@@ -33,11 +33,11 @@ export default function WaveCta() {
             <Button onClick={() => setIsModalOpened(true)}>
               START FREE TRIAL <span>&rarr;</span>
             </Button>
-            <NextLink href="/features" passHref>
+            {/* <NextLink href="/features" passHref>
               <OutlinedButton transparent>
                 Features <span>&rarr;</span>
               </OutlinedButton>
-            </NextLink>
+            </NextLink> */}
           </CustomButtonGroup>
         </Container>
       </CtaWrapper>

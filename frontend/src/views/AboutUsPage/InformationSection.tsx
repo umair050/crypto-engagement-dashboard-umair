@@ -6,20 +6,34 @@ export default function InformationSection() {
     <Wrapper>
       <h3>About StrataMind</h3>
       <p>
-        <strong>StrataMind</strong> provides a powerful social intelligence tool
-        that monitors millions of real-time signals across platforms like
-        Twitter, Reddit, and Discord. We understand that crypto markets can
-        shift rapidly, so we deliver insights instantly—empowering you to make
-        data-driven decisions that align with the pulse of the market. Whether
-        you're a seasoned investor, a hedge fund manager, or just starting your
-        crypto journey, StrataMind is here to give you the edge. We’re committed
-        to continuous innovation, adding new features and analytics to keep pace
-        with the ever-evolving digital landscape. Join us, and start turning
-        social signals into your next big opportunity.
+        With <strong> StrataMind,</strong> you gain access to a powerful social
+        intelligence tool that monitors millions of real-time signals across
+        platforms like Twitter, Reddit, and Discord. We know that crypto markets
+        can turn in seconds, so we deliver insights instantly—empowering you to
+        make data-driven decisions that align with the pulse of the market.{" "}
+        <br /> Whether you're a seasoned investor, a hedge fund manager, or just
+        starting your crypto journey, StrataMind is here to give you the edge.
+        We’re committed to continuous innovation, adding new features and
+        analytics to keep pace with the ever-evolving digital landscape.
+        <br /> Join us, and start turning social signals into your next big
+        opportunity.
+      </p>
+
+      <p>
+        No need to worry about legality for now, I’m hiring a lawyer to go
+        through this part as well in few weeks. Terms of Service template: Terms
+        of Service
       </p>
 
       <p>
         <strong>Last Updated:</strong> {currentDate}
+      </p>
+      <p>
+        Welcome to StrataMind! These Terms of Service ("Terms") govern your
+        access to and use of the StrataMind platform ("Platform"), including all
+        associated features, content, and services provided by StrataMind. By
+        using our Platform, you agree to comply with these Terms. Please read
+        them carefully.
       </p>
 
       <Section>
