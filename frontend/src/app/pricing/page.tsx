@@ -21,6 +21,6 @@ export default function PricingPage() {
 
 const Wrapper = styled.div`
   & > :last-child {
-    margin-bottom: 15rem;
+    margin-bottom: 1rem;
   }
 `;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function PrivacyPolicySection() {
+export default function InformationSection() {
   const currentDate = new Date().toLocaleDateString();
   return (
     <Wrapper>

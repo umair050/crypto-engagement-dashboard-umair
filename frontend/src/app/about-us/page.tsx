@@ -2,9 +2,9 @@
 import styled from "styled-components";
 import Page from "@/components/Page";
 import { media } from "@/utils/media";
-import InformationSection from "@/views/AboutUsPage/InformationSection";
+import InformationSection from "@/views/PrivacyPolicyPage/InformationSection";
 
-export default function ContactPage() {
+export default function AboutUsPage() {
   return (
     <Page
       title="About Us"

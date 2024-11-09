@@ -15,7 +15,7 @@ const footerItems: FooterItems = [
     title: "Company",
     items: [
       { title: "About Us", href: "/about-us" },
-      { title: "Terms of Service", href: "/cookies-policy" },
+      { title: "Terms of Service", href: "/terms-of-service" },
       { title: "Privacy Policy", href: "/privacy-policy" },
     ],
   },

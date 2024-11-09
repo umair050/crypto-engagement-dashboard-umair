@@ -79,7 +79,7 @@ export default function Homepage() {
 
 const HomepageWrapper = styled.div`
   & > :last-child {
-    margin-bottom: 15rem;
+    margin-bottom: 1rem;
   }
 `;
 

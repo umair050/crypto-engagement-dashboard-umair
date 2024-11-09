@@ -7,7 +7,7 @@ import Button from "./Button";
 import Container from "./Container";
 import Drawer from "./Drawer";
 import { HamburgerIcon } from "./HamburgerIcon";
-import Logo from "./Logo";
+// import Logo from "./Logo";
 import { useNewsletterModalContext } from "@/contexts/newsletter-modal.context";
 import { NavItems, SingleNavItem } from "../../types";
 import {
@@ -16,7 +16,8 @@ import {
 } from "@/hooks/useScrollPosition";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-
+import Image from "next/image";
+import Logo from "../../public/Strara Mind Logo/logopng.png.png";
 const ColorSwitcher = dynamic(() => import("../components/ColorSwitcher"), {
   ssr: false,
 });
@@ -81,7 +82,12 @@ export default function Navbar({ items }: NavbarProps) {
       <Content>
         <LogoWrapper>
           <Link href="/">
-            <Logo />
+            <Image
+              src={Logo} // Path is relative to the public folder
+              alt="Strara Mind Logo"
+              width={100} // Set width
+              height={70} // Set height
+            />
           </Link>
         </LogoWrapper>
 

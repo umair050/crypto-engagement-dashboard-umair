@@ -4,27 +4,13 @@ export default function InformationSection() {
   const currentDate = new Date().toLocaleDateString();
   return (
     <Wrapper>
-      <h3>About StrataMind</h3>
-      <p>
-        With <strong> StrataMind,</strong> you gain access to a powerful social
-        intelligence tool that monitors millions of real-time signals across
-        platforms like Twitter, Reddit, and Discord. We know that crypto markets
-        can turn in seconds, so we deliver insights instantly—empowering you to
-        make data-driven decisions that align with the pulse of the market.{" "}
-        <br /> Whether you're a seasoned investor, a hedge fund manager, or just
-        starting your crypto journey, StrataMind is here to give you the edge.
-        We’re committed to continuous innovation, adding new features and
-        analytics to keep pace with the ever-evolving digital landscape.
-        <br /> Join us, and start turning social signals into your next big
-        opportunity.
-      </p>
+      <h3>Terms of Service</h3>
 
       <p>
         No need to worry about legality for now, I’m hiring a lawyer to go
         through this part as well in few weeks. Terms of Service template: Terms
         of Service
       </p>
-
       <p>
         <strong>Last Updated:</strong> {currentDate}
       </p>
@@ -78,14 +64,24 @@ export default function InformationSection() {
       <Section>
         <strong>5. User Conduct</strong>
         <br />
-        When using the Platform, you agree not to: <br />• Engage in any
-        activity that violates these Terms or applicable laws. <br />
-        • Attempt to gain unauthorized access to the Platform or its systems.
-        <br />
-        • Use the Platform to distribute spam, malware, or engage in any harmful
-        activity.
-        <br />• Reproduce, duplicate, copy, sell, or exploit any portion of the
-        Platform without express permission from StrataMind.
+        When using the Platform, you agree not to: <br />•{" "}
+        <strong>
+          Engage in any activity that violates these Terms or applicable laws.
+        </strong>
+        <br />•{" "}
+        <strong>
+          Attempt to gain unauthorized access to the Platform or its systems.
+        </strong>
+        <br />•{" "}
+        <strong>
+          Use the Platform to distribute spam, malware, or engage in any harmful
+          activity.
+        </strong>
+        <br />•{" "}
+        <strong>
+          Reproduce, duplicate, copy, sell, or exploit any portion of the
+          Platform without express permission from StrataMind.
+        </strong>
       </Section>
 
       <Section>
