@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import Page from "@/components/Page";
 import { media } from "@/utils/media";
-import InformationSection from "@/views/PrivacyPolicyPage/InformationSection";
+import InformationSection from "@/views/AboutUsPage/InformationSection";
 
 export default function AboutUsPage() {
   return (
