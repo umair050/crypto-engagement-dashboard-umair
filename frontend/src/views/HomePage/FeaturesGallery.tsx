@@ -92,10 +92,10 @@ export default function FeaturesGallery() {
         <SectionTitle>POWERFUL FEATURES FOR CRYPTO TRADERS</SectionTitle>
         <h3>What sets StrataMind apart?</h3>
       </Content>
-      <GalleryWrapper>
+      {/* <GalleryWrapper>
         <TabsContainer>{tabsMarkup}</TabsContainer>
         {imagesMarkup}
-      </GalleryWrapper>
+      </GalleryWrapper> */}
     </FeaturesGalleryWrapper>
   );
 }

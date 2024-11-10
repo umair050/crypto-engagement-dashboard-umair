@@ -61,7 +61,7 @@ export default function Homepage() {
           </BasicSection>
         </WhiteBackgroundContainer>
         <DarkerBackgroundContainer>
-          <Cta />
+          {/* <Cta /> */}
           <FeaturesGallery />
           <Features />
           <Testimonials />
