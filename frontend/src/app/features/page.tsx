@@ -6,63 +6,64 @@ import YoutubeVideo from "@/components/YoutubeVideo";
 import { media } from "@/utils/media";
 import styled from "styled-components";
 import Page from "@/components/Page";
+import Features from "@/views/HomePage/Features";
 
-const FEATURES = [
-  {
-    imageUrl: "/grid-icons/asset-1.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-2.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-3.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-4.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-5.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-6.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-7.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-8.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-  {
-    imageUrl: "/grid-icons/asset-9.svg",
-    title: "Lorem ipsum dolor sit amet.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
-  },
-];
+// const FEATURES = [
+//   {
+//     imageUrl: "/grid-icons/asset-1.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+//   {
+//     imageUrl: "/grid-icons/asset-2.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+//   {
+//     imageUrl: "/grid-icons/asset-3.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+//   {
+//     imageUrl: "/grid-icons/asset-4.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+//   {
+//     imageUrl: "/grid-icons/asset-5.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+//   {
+//     imageUrl: "/grid-icons/asset-6.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+//   {
+//     imageUrl: "/grid-icons/asset-7.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+//   {
+//     imageUrl: "/grid-icons/asset-8.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+//   {
+//     imageUrl: "/grid-icons/asset-9.svg",
+//     title: "Lorem ipsum dolor sit amet.",
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?",
+//   },
+// ];
 
 export default function FeaturesPage() {
   return (
@@ -71,13 +72,14 @@ export default function FeaturesPage() {
       description="Elit aute do nisi Lorem id ea culpa sint duis eu tempor dolore elit."
     >
       <Wrapper>
-        <SectionTitle>Check out this quick introduction</SectionTitle>
-        <YoutubeVideo url="https://www.youtube.com/watch?v=BggrpKfqh1c" />
-        <CustomAutofitGrid>
+        {/* <SectionTitle>Check out this quick introduction</SectionTitle> */}
+        {/* <YoutubeVideo url="https://www.youtube.com/watch?v=BggrpKfqh1c" /> */}
+        {/* <CustomAutofitGrid>
           {FEATURES.map((singleFeature, idx) => (
             <BasicCard key={singleFeature.title} {...singleFeature} />
           ))}
-        </CustomAutofitGrid>
+        </CustomAutofitGrid> */}
+        <Features />
       </Wrapper>
     </Page>
   );

@@ -1,22 +1,23 @@
 "use client";
 import dynamic from "next/dynamic";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { media } from "@/utils/media";
 import Button from "./Button";
 import Container from "./Container";
 import Drawer from "./Drawer";
 import { HamburgerIcon } from "./HamburgerIcon";
-import Logo from "./Logo";
 import { useNewsletterModalContext } from "@/contexts/newsletter-modal.context";
 import { NavItems, SingleNavItem } from "../../types";
 import {
   ScrollPositionEffectProps,
   useScrollPosition,
 } from "@/hooks/useScrollPosition";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
-
+import Image from "next/image";
+import LogoLight from "../../public/Strara Mind Logo/logopng.png.png";
+import LogoDark from "../../public/Strara Mind Logo/logojpg.jpg.jpg";
 const ColorSwitcher = dynamic(() => import("../components/ColorSwitcher"), {
   ssr: false,
 });
@@ -30,6 +31,26 @@ export default function Navbar({ items }: NavbarProps) {
   const { toggle } = Drawer.useDrawer();
   const [scrollingDirection, setScrollingDirection] =
     useState<ScrollingDirections>("none");
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Check for "next-dark-theme" class on <body>
+  useEffect(() => {
+    const checkBodyClass = () => {
+      const body = document.body;
+      setIsDarkMode(body.classList.contains("next-dark-theme"));
+    };
+
+    checkBodyClass(); // Run on component mount
+
+    // Optionally, observe class changes if theme toggles during app usage
+    const observer = new MutationObserver(checkBodyClass);
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   let lastScrollY = useRef(0);
   const lastRoute = useRef("");
@@ -81,7 +102,12 @@ export default function Navbar({ items }: NavbarProps) {
       <Content>
         <LogoWrapper>
           <Link href="/">
-            <Logo />
+            <Image
+              src={isDarkMode ? LogoLight : LogoDark} // Switch logos based on theme class
+              alt="Strara Mind Logo"
+              width={100} // Set width
+              height={70} // Set height
+            />
           </Link>
         </LogoWrapper>
 
