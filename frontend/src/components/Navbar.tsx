@@ -16,8 +16,8 @@ import {
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import LogoLight from "../../public/Strara Mind Logo/logopng.png.png";
-import LogoDark from "../../public/Strara Mind Logo/logojpg.jpg.jpg";
+import LogoLight from "../../public/Strara Mind Logo/lightlogo.png";
+import LogoDark from "../../public/Strara Mind Logo/darklogo.png";
 const ColorSwitcher = dynamic(() => import("../components/ColorSwitcher"), {
   ssr: false,
 });
@@ -103,7 +103,7 @@ export default function Navbar({ items }: NavbarProps) {
         <LogoWrapper>
           <Link href="/">
             <Image
-              src={isDarkMode ? LogoLight : LogoDark} // Switch logos based on theme class
+              src={isDarkMode ? LogoDark : LogoLight} // Switch logos based on theme class
               alt="Strara Mind Logo"
               width={100} // Set width
               height={70} // Set height
