@@ -62,7 +62,7 @@ export default function Footer() {
               <LinkedinIcon size={50} round={true} />
             </Link>
           </ShareBar>
-          <Copyright>&copy; Copyright 2021 My Saas Startup</Copyright>
+          <Copyright>&copy; 2024 StrataMind - All rights reserved</Copyright>
         </BottomBar>
       </Container>
     </FooterWrapper>

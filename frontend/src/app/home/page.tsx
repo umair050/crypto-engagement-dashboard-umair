@@ -14,6 +14,7 @@ import FeaturesGallery from "@/views/HomePage/FeaturesGallery";
 import Features from "@/views/HomePage/Features";
 import { getAllPosts } from "@/utils/postsFetcher";
 import Link from "next/link";
+import WaveCta from "@/components/WaveCta";
 
 export default function Homepage() {
   return (

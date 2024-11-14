@@ -101,7 +101,6 @@ export default function RootLayout({
                         <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
                           {children}
                         </main>
-                        <WaveCta />
                         <Footer />
                       </Suspense>
                     </Elements>

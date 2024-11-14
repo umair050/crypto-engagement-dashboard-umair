@@ -11,6 +11,7 @@ import Cta from "@/views/HomePage/Cta";
 import FeaturesGallery from "@/views/HomePage/FeaturesGallery";
 import Features from "@/views/HomePage/Features";
 import CustomLink from "@/components/CustomLink";
+import WaveCta from "@/components/WaveCta";
 
 export default function Homepage() {
   return (
@@ -67,6 +68,7 @@ export default function Homepage() {
           <Testimonials />
           {/* <ScrollableBlogPosts posts={posts} /> */}
         </DarkerBackgroundContainer>
+        <WaveCta />
       </HomepageWrapper>
     </>
   );
@@ -74,7 +76,7 @@ export default function Homepage() {
 
 const HomepageWrapper = styled.div`
   & > :last-child {
-    margin-bottom: 1rem;
+    margin-bottom: 0px;
   }
 `;
 
