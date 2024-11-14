@@ -35,7 +35,12 @@ const footerItems: FooterItems = [
   },
   {
     title: "Contact Info",
-    items: [{ title: "Email: ryg94@stratamind.io", href: "/blog" }],
+    items: [
+      {
+        title: "Email: ryg94@stratamind.io",
+        href: "mailto:ryg94@stratamind.io",
+      },
+    ],
   },
 ];
 
@@ -91,7 +96,7 @@ function ListItem({ title, href }: SingleFooterListItem) {
 }
 
 const FooterWrapper = styled.div`
-  padding-top: 10rem;
+  padding-top: 5rem;
   padding-bottom: 4rem;
   background: rgb(var(--secondary));
   color: rgb(var(--textSecondary));
@@ -152,7 +157,7 @@ const Copyright = styled.p`
 `;
 
 const BottomBar = styled.div`
-  margin-top: 6rem;
+  margin-top: 0rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -74,6 +74,7 @@ const ImageContainer = styled.div`
   }
 
   ${media("<=desktop")} {
+    display: none;
     margin-top: 2rem;
     justify-content: center;
     svg {
