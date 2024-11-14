@@ -31,23 +31,24 @@ export default function Navbar({ items }: NavbarProps) {
   const { toggle } = Drawer.useDrawer();
   const [scrollingDirection, setScrollingDirection] =
     useState<ScrollingDirections>("none");
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Check for "next-dark-theme" class on <body>
+  const [isDarkMode, setIsDarkMode] = useState(false); // Start with dark mode enabled
+
+  // Check for dark mode based on body class
   useEffect(() => {
-    const checkBodyClass = () => {
-      const body = document.body;
-      setIsDarkMode(body.classList.contains("next-dark-theme"));
-    };
+    const body = document.body;
 
-    checkBodyClass(); // Run on component mount
+    // Immediately update if body does not have "next-dark-theme"
+    if (!body.classList.contains("next-dark-theme")) {
+      setIsDarkMode(true);
+    }
 
-    // Optionally, observe class changes if theme toggles during app usage
-    const observer = new MutationObserver(checkBodyClass);
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
+    // Observe for body class changes to dynamically update dark mode
+    const observer = new MutationObserver(() =>
+      setIsDarkMode(body.classList.contains("next-dark-theme"))
+    );
+
+    observer.observe(body, { attributes: true, attributeFilter: ["class"] });
 
     return () => observer.disconnect();
   }, []);
@@ -103,7 +104,7 @@ export default function Navbar({ items }: NavbarProps) {
         <LogoWrapper>
           <Link href="/">
             <Image
-              src={isDarkMode ? LogoDark : LogoLight} // Switch logos based on theme class
+              src={!isDarkMode ? LogoLight : LogoDark} // Switch logos based on theme class
               alt="Strara Mind Logo"
               width={100} // Set width
               height={70} // Set height

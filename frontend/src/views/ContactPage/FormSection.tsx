@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import styled from 'styled-components';
-import Button from '@/components/Button';
-import Input from '@/components/Input';
-import { media } from '@/utils/media';
-import MailSentState from '../../components/MailSentState';
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import styled from "styled-components";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import { media } from "@/utils/media";
+import MailSentState from "../../components/MailSentState";
 
 interface EmailPayload {
   name: string;
@@ -23,12 +23,15 @@ export default function FormSection() {
   // Define the onSubmit function as a SubmitHandler for EmailPayload
   const onSubmit: SubmitHandler<EmailPayload> = async (payload) => {
     try {
-      const res = await fetch('/api/sendEmail', {
-        method: 'POST',
+      const res = await fetch("/api/sendEmail", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ subject: 'Email from contact form', ...payload }),
+        body: JSON.stringify({
+          subject: "Email from contact form",
+          ...payload,
+        }),
       });
 
       if (res.status !== 204) {
@@ -53,25 +56,41 @@ export default function FormSection() {
   return (
     <Wrapper>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {hasErrored && <ErrorMessage>Couldn&apos;t send email. Please try again.</ErrorMessage>}
+        {hasErrored && (
+          <ErrorMessage>
+            Couldn&apos;t send email. Please try again.
+          </ErrorMessage>
+        )}
         <InputGroup>
           <InputStack>
             {errors.name && <ErrorMessage>Name is required</ErrorMessage>}
-            <Input placeholder="Your Name" id="name" disabled={isDisabled} {...register('name', { required: true })} />
+            <Input
+              placeholder="Your Name"
+              id="name"
+              disabled={isDisabled}
+              {...register("name", { required: true })}
+            />
           </InputStack>
           <InputStack>
             {errors.email && <ErrorMessage>Email is required</ErrorMessage>}
-            <Input placeholder="Your Email" id="email" disabled={isDisabled} {...register('email', { required: true })} />
+            <Input
+              placeholder="Your Email"
+              id="email"
+              disabled={isDisabled}
+              {...register("email", { required: true })}
+            />
           </InputStack>
         </InputGroup>
         <InputStack>
-          {errors.description && <ErrorMessage>Description is required</ErrorMessage>}
+          {errors.description && (
+            <ErrorMessage>Description is required</ErrorMessage>
+          )}
           <Textarea
             as="textarea"
             placeholder="Enter Your Message..."
             id="description"
             disabled={isDisabled}
-            {...register('description', { required: true })}
+            {...register("description", { required: true })}
           />
         </InputStack>
         <Button as="button" type="submit" disabled={isSubmitDisabled}>
@@ -104,13 +123,25 @@ const InputGroup = styled.div`
     flex: 1;
   }
 
-  ${media('<=tablet')} {
+  ${media("<=tablet")} {
     flex-direction: column;
     & > *:first-child {
       margin-right: 0rem;
       margin-bottom: 2rem;
     }
   }
+`;
+
+const Textarea = styled(Input)`
+  width: 100%;
+  min-height: 20rem;
+  background: rgb(var(--inputBackground));
+  color: rgb(var(--text)); // Use theme color for text
+`;
+
+const ErrorMessage = styled.p`
+  color: rgb(var(--errorColor));
+  font-size: 1.5rem;
 `;
 
 const InputStack = styled.div`
@@ -120,14 +151,4 @@ const InputStack = styled.div`
   & > *:not(:first-child) {
     margin-top: 0.5rem;
   }
-`;
-
-const ErrorMessage = styled.p`
-  color: rgb(var(--errorColor));
-  font-size: 1.5rem;
-`;
-
-const Textarea = styled(Input)`
-  width: 100%;
-  min-height: 20rem;
 `;
