@@ -11,25 +11,60 @@ import Container from "@/components/Container";
 
 const TABS = [
   {
-    title: "Find relevant media contacts - multiline title",
+    title: "Find Relevant Media Contacts:",
     description:
-      "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>",
-    imageUrl: "/demo-illustration-3.png",
-    baseColor: "249,82,120",
-    secondColor: "221,9,57",
+      "<p>Looking to stay informed and connect with top influencers? StrataMind’s Media Contacts Finder tool makes it easy to pinpoint the most influential voices and media outlets in the crypto sphere.</p>",
+
+    imageUrl: "/demo-illustration-5.png",
+    baseColor: "88,193,132",
+    secondColor: "124,207,158",
   },
   {
-    title: "Another amazing feature",
+    title: "Real-Time Engagement:",
+
     description:
-      "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>",
-    imageUrl: "/demo-illustration-4.png",
-    baseColor: "57,148,224",
-    secondColor: "99,172,232",
+      "<p>Follow up with those who amplify trending tokens, creating organic visibility for insights you care about.</p>",
+
+    imageUrl: "/demo-illustration-5.png",
+    baseColor: "88,193,132",
+    secondColor: "124,207,158",
   },
   {
-    title: "And yet... another truly fascinating feature",
+    title: "Insightful Token Comparisons: Sentiment Benchmarking:",
     description:
-      "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>",
+      "<p>Track shifts in sentiment and evaluate long-term potential.</p>",
+    imageUrl: "/demo-illustration-5.png",
+    baseColor: "88,193,132",
+    secondColor: "124,207,158",
+  },
+  {
+    title: "Predictive Analytics:",
+    description:
+      "<p>See where social interest is rising to identify possible price movements.</p>",
+    imageUrl: "/demo-illustration-5.png",
+    baseColor: "88,193,132",
+    secondColor: "124,207,158",
+  },
+  {
+    title: "Sentiment Heatmaps:",
+    description:
+      "<p>Our sentiment heatmaps give you a visual snapshot of crypto discussions across platforms, highlighting the hottest topics and tokens.</p>",
+    imageUrl: "/demo-illustration-5.png",
+    baseColor: "88,193,132",
+    secondColor: "124,207,158",
+  },
+  {
+    title: "Color-Coded Heatmaps:",
+    description:
+      "<p>Instantly see which coins and topics are gaining traction.Regional Sentiment Insights: Break down data by region to track global interest.</p>",
+    imageUrl: "/demo-illustration-5.png",
+    baseColor: "88,193,132",
+    secondColor: "124,207,158",
+  },
+  {
+    title: "Customizable Views:",
+    description:
+      "<p>Filter by platform, timeframe, or engagement type for tailored insights.</p>",
     imageUrl: "/demo-illustration-5.png",
     baseColor: "88,193,132",
     secondColor: "124,207,158",
@@ -92,10 +127,10 @@ export default function FeaturesGallery() {
         <SectionTitle>POWERFUL FEATURES FOR CRYPTO TRADERS</SectionTitle>
         <h3>What sets StrataMind apart?</h3>
       </Content>
-      {/* <GalleryWrapper>
+      <GalleryWrapper>
         <TabsContainer>{tabsMarkup}</TabsContainer>
-        {imagesMarkup}
-      </GalleryWrapper> */}
+        {/* {imagesMarkup} */}
+      </GalleryWrapper>
     </FeaturesGalleryWrapper>
   );
 }
@@ -105,12 +140,14 @@ const FeaturesGalleryWrapper = styled(Container)`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  margin-top: 4rem;
 `;
 
 const GalleryWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-top: 4rem;
+  width: 70%;
 
   ${media("<=desktop")} {
     flex-direction: column;
