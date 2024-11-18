@@ -16,8 +16,8 @@ import {
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import LogoLight from "../../public/Strara Mind Logo/lightlogo.png";
-import LogoDark from "../../public/Strara Mind Logo/darklogo.png";
+import LogoLight from "../../public/Strara Mind Logo/white png.png";
+import LogoDark from "../../public/Strara Mind Logo/black png.png";
 const ColorSwitcher = dynamic(() => import("../components/ColorSwitcher"), {
   ssr: false,
 });

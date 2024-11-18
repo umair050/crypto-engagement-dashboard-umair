@@ -8,10 +8,19 @@ from .models import User
 from apps import db, bcrypt
 from .analytics import fetch_alphas
 import stripe
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import smtplib
+import os
+
+load_dotenv()
 
 
 # Set your Stripe API key
 stripe.api_key = os.getenv('STRIPE_API_KEY')
+
+
+
 
 @blueprint.route('/index', methods=['GET'])
 @jwt_required()
@@ -277,3 +286,111 @@ def get_auth_user():
         })
     else:
         return jsonify({"message": "User not found."}), 404
+
+
+
+
+ 
+
+
+# Load environment variables
+SMTP_SERVER = os.getenv('SMTP_SERVER')  # SMTP server address
+SMTP_PORT = int(os.getenv('SMTP_PORT', 587))  # Default to port 587 if not set
+SMTP_USERNAME = os.getenv('SMTP_USERNAME')  # SMTP username
+SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')  # SMTP password
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')  # Email address of the admin
+
+ 
+@blueprint.route('/send-email', methods=['POST'])
+def send_email():
+    """
+    Endpoint to handle sending emails via SMTP.
+    """
+    try:
+        # Parse JSON input
+        data = request.json
+        if not data:
+            return jsonify({"message": "Request body must be JSON."}), 400
+
+        # Extract fields
+        name = data.get('name')
+        email = data.get('email')
+        description = data.get('description')
+
+        # Validate required fields
+        missing_fields = [field for field in ['name', 'email', 'description'] if not data.get(field)]
+        if missing_fields:
+            return jsonify({"message": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+
+        # Ensure environment variables are configured
+        if not all([SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, ADMIN_EMAIL]):
+            return jsonify({"message": "SMTP configuration is incomplete. Please check environment variables."}), 500
+
+        # Prepare the email
+        msg = MIMEMultipart()
+        msg['From'] = SMTP_USERNAME
+        msg['To'] = ADMIN_EMAIL
+        msg['Subject'] = f"New Message from {name}"
+
+        body = f"Name: {name}\nEmail: {email}\nMessage: {description}"
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Connect to SMTP server and send the email
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USERNAME, SMTP_PASSWORD)
+            server.send_message(msg)
+
+        return jsonify({"message": "Email sent successfully."}), 200
+
+    except smtplib.SMTPAuthenticationError:
+        return jsonify({"message": "SMTP authentication failed. Check your email credentials."}), 500
+
+    except smtplib.SMTPException as smtp_err:
+        return jsonify({"message": f"SMTP error occurred: {smtp_err}"}), 500
+
+    except Exception as e:
+        return jsonify({"message": f"An unexpected error occurred: {str(e)}"}), 500
+    # Uncomment to enforce JWT authentication
+    # user_id = get_jwt_identity()
+
+    try:
+        # Parse JSON input
+        data = request.json
+        if not data:
+            return jsonify({"message": "Request body must be JSON."}), 400
+
+        name = data.get('name')
+        email = data.get('email')
+        description = data.get('description')
+
+        # Validate required fields
+        missing_fields = [field for field in ['name', 'email', 'description'] if not data.get(field)]
+        if missing_fields:
+            return jsonify({"message": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+
+        # Prepare the email
+        msg = MIMEMultipart()
+        msg['From'] = SMTP_USERNAME
+        msg['To'] = ADMIN_EMAIL
+        msg['Subject'] = f"New Message from {name}"
+
+        body = f"Name: {name}\nEmail: {email}\nMessage: {description}"
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Connect to SMTP server and send email
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USERNAME, SMTP_PASSWORD)
+            server.send_message(msg)
+
+        return jsonify({"message": "Email sent successfully."}), 200
+
+    except smtplib.SMTPAuthenticationError:
+        return jsonify({"message": "SMTP authentication failed. Check your email credentials."}), 500
+
+    except smtplib.SMTPException as smtp_err:
+        return jsonify({"message": f"SMTP error occurred: {smtp_err}"}), 500
+
+    except Exception as e:
+        return jsonify({"message": f"An unexpected error occurred: {str(e)}"}), 500
