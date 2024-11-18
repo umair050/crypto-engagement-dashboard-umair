@@ -140,7 +140,7 @@ export const sendEmail = async ({
   let response;
   try {
     response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND}` + "/send-email", // Ensure the path has a leading '/'
+      `${process.env.NEXT_PUBLIC_BACKEND}` + "send-email", // Ensure the path has a leading '/'
       { name, email, description } // Send data with the correct field names
     );
 
