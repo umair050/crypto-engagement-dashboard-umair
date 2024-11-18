@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { media } from "@/utils/media";
 import MailSentState from "../../components/MailSentState";
+import { sendEmail } from "@/services/BACKEND/useAuth";
 
 interface EmailPayload {
   name: string;
@@ -20,29 +21,25 @@ export default function FormSection() {
   const { register, handleSubmit, formState } = useForm<EmailPayload>();
   const { isSubmitSuccessful, isSubmitting, isSubmitted, errors } = formState;
 
-  // Define the onSubmit function as a SubmitHandler for EmailPayload
   const onSubmit: SubmitHandler<EmailPayload> = async (payload) => {
     try {
-      const res = await fetch("/api/sendEmail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          subject: "Email from contact form",
-          ...payload,
-        }),
+      // Call the sendEmail function with proper payload
+      const response = await sendEmail({
+        name: payload.name, // Make sure it's 'name' as per the backend
+        email: payload.email, // Make sure it's 'email'
+        description: payload.description, // And 'description'
       });
 
-      if (res.status !== 204) {
+      // Check for successful response
+      if (response.success) {
+        setHasSuccessfullySentMail(true);
+      } else {
         setHasErrored(true);
       }
-    } catch {
+    } catch (error) {
+      console.error("Error while sending email:", error);
       setHasErrored(true);
-      return;
     }
-
-    setHasSuccessfullySentMail(true);
   };
 
   const isSent = isSubmitSuccessful && isSubmitted;
