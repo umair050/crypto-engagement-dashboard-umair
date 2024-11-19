@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default function InformationSection() {
   return (
     <Wrapper>
       <h3>Contact Info</h3>
       <p>
-        <span>Email:</span> support@myawesomesaas.com
+        <span>Email:</span> ryg94@stratamind.io
       </p>
     </Wrapper>
   );
