@@ -7,8 +7,7 @@ export default function InformationSection() {
       <h3>Terms of Service</h3>
 
       <p>
-        No need to worry about legality for now, I’m hiring a lawyer to go
-        through this part as well in few weeks. Terms of Service template: Terms
+        Terms of Service template: Terms
         of Service
       </p>
       <p>
